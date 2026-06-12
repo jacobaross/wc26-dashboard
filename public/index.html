@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field of 48 — World Cup 2026 Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pitch:#0B3D2E;
+  --pitch-deep:#072B20;
+  --pitch-card:#0E4636;
+  --chalk:#F7F4EC;
+  --chalk-dim:#B9CFC4;
+  --gold:#E8B541;
+  --red:#E2543E;
+  --line:rgba(247,244,236,.16);
+  --line-strong:rgba(247,244,236,.34);
+  --radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Archivo',system-ui,sans-serif;
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(232,181,65,.08), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(226,84,62,.07), transparent 60%),
+    var(--pitch);
+  color:var(--chalk);
+  line-height:1.55;
+  min-height:100vh;
+}
+::selection{background:var(--gold);color:var(--pitch-deep)}
+a{color:var(--gold)}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
+
+/* ===== top broadcast bar ===== */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(7,43,32,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:1180px;margin:0 auto;padding:12px 20px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--chalk)}
+.brand .mark{
+  font-family:'Anton';font-size:1.35rem;letter-spacing:.04em;line-height:1;
+}
+.brand .mark em{font-style:normal;color:var(--gold)}
+.brand .sub{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--chalk-dim)}
+.live-dot{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:var(--red);margin-right:6px;
+  animation:pulse 1.6s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.matchday-chip{
+  margin-left:auto;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--chalk-dim);border:1px solid var(--line);border-radius:999px;padding:5px 12px;
+  white-space:nowrap;
+}
+
+/* ===== tab nav ===== */
+.tabs{
+  max-width:1180px;margin:0 auto;padding:0 20px 12px;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.tab{
+  background:transparent;border:1px solid var(--line);color:var(--chalk-dim);
+  border-radius:999px;padding:7px 16px;font-size:.82rem;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;
+  transition:all .18s ease;
+}
+.tab:hover{border-color:var(--gold);color:var(--chalk)}
+.tab.active{background:var(--gold);border-color:var(--gold);color:var(--pitch-deep)}
+
+/* ===== layout ===== */
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
+.panel{display:none}
+.panel.active{display:block;animation:rise .35s ease}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* pitch-marking section header: touchline + center spot */
+.sect{
+  display:flex;align-items:center;gap:14px;margin:38px 0 18px;
+}
+.sect h2{
+  font-family:'Anton';font-size:clamp(1.3rem,2.6vw,1.8rem);
+  letter-spacing:.06em;text-transform:uppercase;font-weight:400;
+}
+.sect .rule{flex:1;height:2px;background:var(--line-strong);position:relative;border-radius:2px}
+.sect .rule::after{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:9px;height:9px;border-radius:50%;background:var(--line-strong);
+}
+.sect .tag{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+
+/* ===== hero ===== */
+.hero{
+  position:relative;overflow:hidden;
+  border:1px solid var(--line);border-radius:20px;
+  background:linear-gradient(160deg,#0D4434 0%, #093528 55%, #072B20 100%);
+  padding:clamp(28px,5vw,56px);
+  margin-bottom:8px;
+}
+/* signature: center circle + halfway line, like a pitch seen from above */
+.hero::before{
+  content:'';position:absolute;right:-140px;top:50%;transform:translateY(-50%);
+  width:460px;height:460px;border:2px solid rgba(247,244,236,.13);border-radius:50%;
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;right:90px;top:0;bottom:0;width:2px;
+  background:rgba(247,244,236,.13);pointer-events:none;
+}
+.hero .kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:14px;
+}
+.hero h1{
+  font-family:'Anton';font-weight:400;
+  font-size:clamp(2.2rem,6vw,4.2rem);
+  line-height:1.02;letter-spacing:.015em;text-transform:uppercase;
+  max-width:14ch;
+}
+.hero h1 .accent{color:var(--gold)}
+.hero p.lede{
+  margin-top:16px;max-width:54ch;color:var(--chalk-dim);font-size:1.02rem;
+}
+.hero-stats{
+  display:flex;gap:0;margin-top:28px;flex-wrap:wrap;
+  border-top:1px solid var(--line);
+}
+.hstat{
+  padding:16px 28px 4px 0;margin-right:28px;
+}
+.hstat .n{font-family:'Anton';font-size:2rem;color:var(--gold);line-height:1.1}
+.hstat .l{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--chalk-dim)}
+
+/* ===== match cards ===== */
+.match-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:14px}
+.match{
+  background:var(--pitch-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;transition:transform .18s ease, border-color .18s ease;
+}
+.match:hover{transform:translateY(-3px);border-color:var(--line-strong)}
+.match .meta{
+  display:flex;justify-content:space-between;font-size:.68rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--chalk-dim);margin-bottom:12px;
+}
+.match .status-ft{color:var(--chalk-dim)}
+.match .status-today{color:var(--red);font-weight:700}
+.match .row{display:flex;align-items:center;justify-content:space-between;padding:5px 0}
+.match .team{display:flex;align-items:center;gap:9px;font-weight:600;font-size:.95rem}
+.match .team .fl{font-size:1.25rem}
+.match .score{font-family:'Anton';font-size:1.35rem;color:var(--gold);min-width:20px;text-align:right}
+.match .score.tbd{color:var(--chalk-dim);font-size:.85rem;font-family:'Archivo';font-weight:600}
+.match .venue{margin-top:10px;font-size:.74rem;color:var(--chalk-dim)}
+.match .note{margin-top:8px;font-size:.76rem;color:var(--gold);font-style:italic}
+
+/* ===== storyline cards ===== */
+.story-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.story{
+  background:var(--pitch-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px;border-top:3px solid var(--gold);
+}
+.story.alt{border-top-color:var(--red)}
+.story h3{font-family:'Anton';font-weight:400;font-size:1.08rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.story p{font-size:.88rem;color:var(--chalk-dim)}
+
+/* ===== group tables (scoreboard style) ===== */
+.group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
+.gcard{
+  background:var(--pitch-card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;
+}
+.gcard header{
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding:13px 16px;border-bottom:2px solid var(--line-strong);
+  background:rgba(7,43,32,.5);
+}
+.gcard header .gname{font-family:'Anton';font-size:1.05rem;letter-spacing:.1em;text-transform:uppercase}
+.gcard header .gname span{color:var(--gold)}
+.gcard header .ghint{font-size:.68rem;color:var(--chalk-dim);letter-spacing:.08em;text-transform:uppercase}
+table.standings{width:100%;border-collapse:collapse;font-size:.85rem}
+table.standings th{
+  font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--chalk-dim);
+  font-weight:600;text-align:center;padding:8px 4px;border-bottom:1px solid var(--line);
+}
+table.standings th:first-child{text-align:left;padding-left:16px}
+table.standings td{padding:9px 4px;text-align:center;border-bottom:1px solid rgba(247,244,236,.06)}
+table.standings tr:last-child td{border-bottom:none}
+table.standings td.tname{
+  text-align:left;padding-left:16px;font-weight:600;white-space:nowrap;
+}
+table.standings td.tname .fl{margin-right:8px}
+table.standings td.pts{font-family:'Anton';font-size:1.05rem;color:var(--gold)}
+table.standings tr.qpos td.tname{box-shadow:inset 3px 0 0 var(--gold)}
+table.standings tr.clickable{cursor:pointer;transition:background .15s}
+table.standings tr.clickable:hover{background:rgba(232,181,65,.07)}
+.legend{margin-top:14px;font-size:.76rem;color:var(--chalk-dim)}
+.legend .key{display:inline-block;width:10px;height:10px;background:var(--gold);margin-right:6px;border-radius:2px;vertical-align:baseline}
+
+/* ===== teams ===== */
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.controls input{
+  flex:1;min-width:220px;background:var(--pitch-deep);border:1px solid var(--line);
+  color:var(--chalk);border-radius:10px;padding:10px 14px;font-family:inherit;font-size:.9rem;
+}
+.controls input::placeholder{color:var(--chalk-dim)}
+.controls select{
+  background:var(--pitch-deep);border:1px solid var(--line);color:var(--chalk);
+  border-radius:10px;padding:10px 14px;font-family:inherit;font-size:.9rem;
+}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px}
+.tcard{
+  background:var(--pitch-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px;text-align:left;color:var(--chalk);
+  display:flex;flex-direction:column;gap:7px;
+  transition:transform .18s ease, border-color .18s ease;
+}
+.tcard:hover{transform:translateY(-3px);border-color:var(--gold)}
+.tcard .top{display:flex;align-items:center;justify-content:space-between}
+.tcard .fl{font-size:1.9rem;line-height:1}
+.tcard .grp{
+  font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--pitch-deep);background:var(--chalk-dim);border-radius:4px;padding:2px 7px;font-weight:700;
+}
+.tcard .nm{font-family:'Anton';font-weight:400;font-size:1.08rem;letter-spacing:.04em;text-transform:uppercase}
+.tcard .star{font-size:.76rem;color:var(--chalk-dim)}
+.tcard .odds-chip{font-size:.74rem;color:var(--gold);font-weight:700}
+
+/* ===== modal ===== */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(4,20,15,.78);backdrop-filter:blur(4px);
+  display:none;align-items:flex-start;justify-content:center;z-index:100;
+  padding:40px 16px;overflow-y:auto;
+}
+.modal-bg.open{display:flex}
+.modal{
+  background:linear-gradient(170deg,#0E4636,#082E23);
+  border:1px solid var(--line-strong);border-radius:18px;
+  max-width:620px;width:100%;padding:30px;position:relative;
+  animation:rise .3s ease;
+}
+.modal .close{
+  position:absolute;top:14px;right:14px;background:transparent;border:1px solid var(--line);
+  color:var(--chalk);border-radius:50%;width:34px;height:34px;font-size:1rem;
+}
+.modal .close:hover{border-color:var(--gold);color:var(--gold)}
+.modal .mhead{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.modal .mhead .fl{font-size:3.2rem;line-height:1}
+.modal h3{font-family:'Anton';font-weight:400;font-size:1.7rem;letter-spacing:.04em;text-transform:uppercase}
+.modal .mgroup{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.modal .facts{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;
+}
+.modal .fact{
+  background:rgba(7,43,32,.55);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+}
+.modal .fact .fl-label{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--chalk-dim)}
+.modal .fact .fl-val{font-weight:700;font-size:.92rem;margin-top:3px}
+.modal .fact .fl-val.gold{color:var(--gold);font-family:'Anton';font-size:1.2rem;font-weight:400}
+.modal .blurb{font-size:.92rem;color:var(--chalk-dim);margin-bottom:16px}
+.modal h4{
+  font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);
+  margin:18px 0 8px;
+}
+.modal .fixture{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;border-bottom:1px solid rgba(247,244,236,.07);font-size:.86rem;
+}
+.modal .fixture:last-child{border-bottom:none}
+.modal .fixture .fdate{color:var(--chalk-dim);font-size:.74rem;min-width:58px}
+.modal .fixture .fscore{font-family:'Anton';color:var(--gold)}
+
+/* ===== odds ===== */
+.odds-board{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.odd-row{
+  display:grid;grid-template-columns:34px 200px 1fr 92px;gap:14px;align-items:center;
+  background:var(--pitch-card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;
+}
+.odd-row .rank{font-family:'Anton';color:var(--chalk-dim);font-size:1rem}
+.odd-row .tm{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.92rem}
+.odd-row .tm .fl{font-size:1.3rem}
+.bar-track{height:14px;background:rgba(7,43,32,.7);border-radius:99px;overflow:hidden}
+.bar-fill{
+  height:100%;border-radius:99px;
+  background:linear-gradient(90deg,var(--gold),#F3D27E);
+  width:0;transition:width 1s cubic-bezier(.2,.7,.3,1);
+}
+.odd-row.dark .bar-fill{background:linear-gradient(90deg,var(--red),#F08D7C)}
+.odd-row .figures{text-align:right}
+.odd-row .figures .ml{font-family:'Anton';color:var(--gold);font-size:1.05rem}
+.odd-row.dark .figures .ml{color:var(--red)}
+.odd-row .figures .ip{font-size:.68rem;color:var(--chalk-dim)}
+.fine{font-size:.74rem;color:var(--chalk-dim);margin-top:14px;font-style:italic}
+
+/* ===== schedule ===== */
+.day-block{margin-bottom:26px}
+.day-block h3{
+  font-family:'Anton';font-weight:400;font-size:1.05rem;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:10px;color:var(--chalk);
+}
+.day-block h3 span{color:var(--gold)}
+.sched-row{
+  display:flex;align-items:center;gap:14px;padding:9px 14px;
+  border:1px solid var(--line);border-radius:10px;margin-bottom:7px;
+  background:var(--pitch-card);font-size:.88rem;flex-wrap:wrap;
+}
+.sched-row .gbadge{
+  font-size:.62rem;font-weight:700;letter-spacing:.1em;background:var(--chalk-dim);
+  color:var(--pitch-deep);border-radius:4px;padding:2px 7px;text-transform:uppercase;
+}
+.sched-row .fixture-name{font-weight:600;flex:1;min-width:200px}
+.sched-row .res{font-family:'Anton';color:var(--gold)}
+.sched-row .city{font-size:.74rem;color:var(--chalk-dim);margin-left:auto}
+.timeline{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:6px}
+.tl-card{
+  background:var(--pitch-card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;
+  border-left:3px solid var(--gold);
+}
+.tl-card .d{font-family:'Anton';font-size:1rem;color:var(--gold);letter-spacing:.04em}
+.tl-card .e{font-size:.84rem;font-weight:600;margin-top:4px}
+.tl-card .v{font-size:.74rem;color:var(--chalk-dim);margin-top:2px}
+
+/* ===== cup tab ===== */
+.format-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.fcard{background:var(--pitch-card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.fcard .big{font-family:'Anton';font-size:2.1rem;color:var(--gold);line-height:1.1}
+.fcard h3{font-family:'Anton';font-weight:400;font-size:1rem;letter-spacing:.06em;text-transform:uppercase;margin:6px 0 8px}
+.fcard p{font-size:.86rem;color:var(--chalk-dim)}
+.venue-cols{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.vcard{background:var(--pitch-card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.vcard h3{font-family:'Anton';font-weight:400;font-size:1.05rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.vcard h3 .fl{margin-right:8px}
+.vcard ul{list-style:none}
+.vcard li{font-size:.86rem;color:var(--chalk-dim);padding:4px 0;border-bottom:1px solid rgba(247,244,236,.06)}
+.vcard li:last-child{border:none}
+.vcard li strong{color:var(--chalk)}
+
+footer{
+  border-top:1px solid var(--line);margin-top:60px;padding:24px 20px;text-align:center;
+  font-size:.76rem;color:var(--chalk-dim);
+}
+
+@media (max-width:640px){
+  .odd-row{grid-template-columns:24px 1fr 80px;gap:10px}
+  .odd-row .bar-track{display:none}
+  .modal .facts{grid-template-columns:1fr}
+  .hero::before,.hero::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#" onclick="showTab('today');return false;">
+      <span class="mark">FIELD OF <em>48</em></span>
+      <span class="sub">World Cup 2026 · USA · Canada · Mexico</span>
+    </a>
+    <span class="matchday-chip"><span class="live-dot"></span>Matchday 2 · Fri, June 12, 2026</span>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Dashboard sections">
+    <button class="tab active" data-tab="today" role="tab" aria-selected="true">Today</button>
+    <button class="tab" data-tab="groups" role="tab" aria-selected="false">Groups</button>
+    <button class="tab" data-tab="teams" role="tab" aria-selected="false">Teams</button>
+    <button class="tab" data-tab="odds" role="tab" aria-selected="false">Odds</button>
+    <button class="tab" data-tab="schedule" role="tab" aria-selected="false">Schedule</button>
+    <button class="tab" data-tab="cup" role="tab" aria-selected="false">The Cup</button>
+  </nav>
+</div>
+
+<main class="wrap">
+
+  <!-- ================= TODAY ================= -->
+  <section class="panel active" id="panel-today" role="tabpanel">
+    <div class="hero">
+      <span class="kicker">It's on · Day 2 of 39</span>
+      <h1>The biggest <span class="accent">World Cup</span> ever is underway.</h1>
+      <p class="lede">48 teams. 104 matches. Three host nations. Mexico opened with a win at the Azteca, South Korea stunned Czechia in Guadalajara — and tonight, the USA and Canada step onto home soil.</p>
+      <div class="hero-stats">
+        <div class="hstat"><div class="n">48</div><div class="l">Teams</div></div>
+        <div class="hstat"><div class="n">104</div><div class="l">Matches</div></div>
+        <div class="hstat"><div class="n">16</div><div class="l">Host cities</div></div>
+        <div class="hstat"><div class="n">Jul 19</div><div class="l">Final · MetLife</div></div>
+      </div>
+    </div>
+
+    <div class="sect"><h2>Tonight's Matches</h2><div class="rule"></div><span class="tag">Fri Jun 12</span></div>
+    <div class="match-grid" id="today-matches"></div>
+
+    <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Matchday 1</span></div>
+    <div class="match-grid" id="played-matches"></div>
+
+    <div class="sect"><h2>Storylines To Watch</h2><div class="rule"></div></div>
+    <div class="story-grid">
+      <div class="story"><h3>🐐 The last dances</h3><p>Lionel Messi (Argentina) and Cristiano Ronaldo (Portugal) are both in their sixth — and almost certainly final — World Cup. If both win their groups, the bracket points toward a fairytale quarterfinal collision.</p></div>
+      <div class="story alt"><h3>🏠 Three hosts, three dreams</h3><p>Mexico already delivered at the Azteca. The USA opens tonight at SoFi under Mauricio Pochettino, while Canada kicks off at BMO Field. No host nation has lifted the trophy since France in 1998.</p></div>
+      <div class="story"><h3>⚡ Spain's golden floor</h3><p>The Euro 2024 champions enter as betting favorites. Lamine Yamal, still a teenager, may be the most electric player on the planet — and Pedri runs the most fluent midfield in the field.</p></div>
+      <div class="story alt"><h3>🟥 A record-breaking opener</h3><p>Mexico's 2–0 win over South Africa featured three red cards — the most ever in a single World Cup match. The expanded tournament wasted no time making history.</p></div>
+      <div class="story"><h3>🇳🇴 Haaland, finally</h3><p>Norway is at its first World Cup since 1998, and Erling Haaland arrives as maybe the best pure striker alive. At 30–1, the Norwegians are the bookmakers' favorite dark horse.</p></div>
+      <div class="story alt"><h3>🆕 First-timers' club</h3><p>Curaçao (the smallest nation ever at a World Cup), Cape Verde, Jordan, and Uzbekistan all debut. Haiti and DR Congo are back for the first time since 1974.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= GROUPS ================= -->
+  <section class="panel" id="panel-groups" role="tabpanel">
+    <div class="sect"><h2>Group Standings</h2><div class="rule"></div><span class="tag">Live · Jun 12</span></div>
+    <p class="legend"><span class="key"></span>Top two in each group qualify for the Round of 32, joined by the eight best third-place teams. Click any team for the full profile.</p>
+    <div class="group-grid" id="groups-container" style="margin-top:16px"></div>
+  </section>
+
+  <!-- ================= TEAMS ================= -->
+  <section class="panel" id="panel-teams" role="tabpanel">
+    <div class="sect"><h2>The 48</h2><div class="rule"></div><span class="tag">Every team</span></div>
+    <div class="controls">
+      <input type="search" id="team-search" placeholder="Search teams, stars, storylines…" aria-label="Search teams">
+      <select id="group-filter" aria-label="Filter by group">
+        <option value="">All groups</option>
+      </select>
+    </div>
+    <div class="team-grid" id="teams-container"></div>
+  </section>
+
+  <!-- ================= ODDS ================= -->
+  <section class="panel" id="panel-odds" role="tabpanel">
+    <div class="sect"><h2>Title Odds Board</h2><div class="rule"></div><span class="tag">As of Jun 12</span></div>
+    <p style="color:var(--chalk-dim);font-size:.9rem;max-width:64ch">Spain and France have traded the top spot for months and enter as co-favorites. The defending champions, Argentina, sit sixth — bookmakers are wary of a repeat, history's hardest trick. Bars show implied win probability.</p>
+    <div class="odds-board" id="odds-board"></div>
+    <div class="sect"><h2>Dark Horses</h2><div class="rule"></div></div>
+    <div class="story-grid">
+      <div class="story alt"><h3>🇳🇴 Norway · 30–1</h3><p>Haaland and Ødegaard headline the best team Norway has ever sent anywhere. A brutal Group I with France awaits, but nobody wants them in a knockout round.</p></div>
+      <div class="story alt"><h3>🇨🇴 Colombia · 40–1</h3><p>Luis Díaz in his prime, James Rodríguez conducting one last symphony. A winnable Group K with Portugal could set up a deep run.</p></div>
+      <div class="story alt"><h3>🇺🇸 USA · home heat</h3><p>The American betting public is backing the hosts at an outsized clip. The USMNT is +138 to win Group D — every group match on home soil, and a friendly bracket if they top it.</p></div>
+      <div class="story alt"><h3>🇺🇾 Uruguay · 65–1</h3><p>Two-time champions with Valverde and Bielsa-ball chaos. Longer odds than they deserve — exactly what a sleeper looks like.</p></div>
+    </div>
+    <p class="fine">Odds compiled from BetMGM, FanDuel and DraftKings as of June 11–12, 2026. They move constantly — this board is context, not betting advice.</p>
+  </section>
+
+  <!-- ================= SCHEDULE ================= -->
+  <section class="panel" id="panel-schedule" role="tabpanel">
+    <div class="sect"><h2>Group Stage</h2><div class="rule"></div><span class="tag">Jun 11 – 27</span></div>
+    <div id="schedule-container"></div>
+    <div class="sect"><h2>The Road to MetLife</h2><div class="rule"></div><span class="tag">Knockouts</span></div>
+    <div class="timeline">
+      <div class="tl-card"><div class="d">Jun 28 – Jul 3</div><div class="e">Round of 32</div><div class="v">32 teams, new this year</div></div>
+      <div class="tl-card"><div class="d">Jul 4 – 7</div><div class="e">Round of 16</div><div class="v">Across all three nations</div></div>
+      <div class="tl-card"><div class="d">Jul 9 – 11</div><div class="e">Quarterfinals</div><div class="v">Boston · LA · Miami · Kansas City</div></div>
+      <div class="tl-card"><div class="d">Jul 14 – 15</div><div class="e">Semifinals</div><div class="v">Dallas · Atlanta</div></div>
+      <div class="tl-card"><div class="d">Jul 18</div><div class="e">Third-place match</div><div class="v">Miami</div></div>
+      <div class="tl-card" style="border-left-color:var(--red)"><div class="d" style="color:var(--red)">Jul 19</div><div class="e">The Final</div><div class="v">MetLife Stadium, East Rutherford NJ</div></div>
+    </div>
+  </section>
+
+  <!-- ================= THE CUP ================= -->
+  <section class="panel" id="panel-cup" role="tabpanel">
+    <div class="sect"><h2>How It Works</h2><div class="rule"></div><span class="tag">New format</span></div>
+    <div class="format-grid">
+      <div class="fcard"><div class="big">12 × 4</div><h3>Groups</h3><p>Twelve groups of four. Each team plays the other three once. Three points for a win, one for a draw.</p></div>
+      <div class="fcard"><div class="big">2 + 8</div><h3>Who advances</h3><p>The top two in every group go through, plus the eight best third-place teams — 32 of 48 survive the group stage.</p></div>
+      <div class="fcard"><div class="big">R32</div><h3>New knockout round</h3><p>A Round of 32 debuts, adding an extra knockout round. From there it's win-or-go-home all the way to July 19.</p></div>
+      <div class="fcard"><div class="big">2 paths</div><h3>Bracket protection</h3><p>FIFA split the bracket so the two highest-ranked teams — Spain and Argentina — can't meet before the final if both win their groups.</p></div>
+      <div class="fcard"><div class="big">ET + pens</div><h3>Tied? </h3><p>Knockout draws go to 30 minutes of extra time, then penalties. Group tiebreakers: goal difference, goals scored, head-to-head, fair play, then lots.</p></div>
+      <div class="fcard"><div class="big">1st</div><h3>Three hosts</h3><p>The first World Cup ever hosted by three nations. The USA stages every match from the quarterfinals on.</p></div>
+    </div>
+    <div class="sect"><h2>16 Host Cities</h2><div class="rule"></div></div>
+    <div class="venue-cols">
+      <div class="vcard"><h3><span class="fl">🇺🇸</span>United States · 11</h3><ul>
+        <li><strong>New York / NJ</strong> — MetLife (The Final)</li>
+        <li><strong>Los Angeles</strong> — SoFi Stadium</li>
+        <li><strong>Dallas</strong> — AT&amp;T Stadium</li>
+        <li><strong>Atlanta</strong> — Mercedes-Benz</li>
+        <li><strong>Houston</strong> — NRG Stadium</li>
+        <li><strong>Miami</strong> — Hard Rock</li>
+        <li><strong>Boston</strong> — Gillette</li>
+        <li><strong>Philadelphia</strong> — Lincoln Financial</li>
+        <li><strong>Seattle</strong> — Lumen Field</li>
+        <li><strong>SF Bay Area</strong> — Levi's Stadium</li>
+        <li><strong>Kansas City</strong> — Arrowhead</li>
+      </ul></div>
+      <div class="vcard"><h3><span class="fl">🇲🇽</span>Mexico · 3</h3><ul>
+        <li><strong>Mexico City</strong> — Estadio Azteca (the opener)</li>
+        <li><strong>Guadalajara</strong> — Estadio Akron</li>
+        <li><strong>Monterrey</strong> — Estadio BBVA</li>
+      </ul></div>
+      <div class="vcard"><h3><span class="fl">🇨🇦</span>Canada · 2</h3><ul>
+        <li><strong>Toronto</strong> — BMO Field</li>
+        <li><strong>Vancouver</strong> — BC Place</li>
+      </ul></div>
+      <div class="vcard"><h3>🏆 Trophy facts</h3><ul>
+        <li><strong>Brazil</strong> — most titles (5)</li>
+        <li><strong>Argentina</strong> — defending champions (2022)</li>
+        <li><strong>Spain &amp; France</strong> — 2026 favorites</li>
+        <li><strong>Mexico City</strong> — only city to host 3 World Cups</li>
+      </ul></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- team modal -->
+<div class="modal-bg" id="modal-bg" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="close" id="modal-close" aria-label="Close team profile">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<footer>
+  Field of 48 · Standings, results and odds current as of Friday, June 12, 2026 · Built for fun, refreshed by you
+</footer>
+
+<script>
+/* ================= DATA ================= */
+const TEAMS = {
+  // Group A
+  "Mexico":{fl:"🇲🇽",g:"A",star:"Gilberto Mora · 17-year-old phenom",hist:"18th appearance · QF twice",odds:null,blurb:"The hosts opened the tournament with a 2–0 statement at the Azteca — a match that produced a record three red cards. Veteran keeper Guillermo Ochoa is at his fifth World Cup, while teenager Gilberto Mora carries the new generation's hopes. El Tri has never passed the quarterfinals; doing it at home would be immortality."},
+  "South Africa":{fl:"🇿🇦",g:"A",star:"Relebohile Mofokeng · winger",hist:"4th appearance · first since hosting 2010",odds:null,blurb:"Bafana Bafana are back at the World Cup for the first time since hosting in 2010 — and drew Mexico in the opener, just like that year. The opening loss leaves them needing results against Czechia and South Korea to keep the dream alive."},
+  "South Korea":{fl:"🇰🇷",g:"A",star:"Son Heung-min · captain & talisman",hist:"11th straight appearance · SF in 2002",odds:null,blurb:"The Taeguk Warriors fell behind against Czechia and roared back to win 2–1, with Son Heung-min — likely at his final World Cup — pulling the strings. Korea has qualified for eleven consecutive tournaments, a streak only the giants can match."},
+  "Czechia":{fl:"🇨🇿",g:"A",star:"Patrik Schick · striker",hist:"First World Cup as Czechia since 2006",odds:null,blurb:"Winners of UEFA playoff D, the Czechs are at their first World Cup in two decades. A late collapse against South Korea stung, but Patrik Schick's goal threat keeps them dangerous against South Africa and Mexico."},
+  // Group B
+  "Canada":{fl:"🇨🇦",g:"B",star:"Alphonso Davies · world-class wing-back",hist:"3rd appearance · co-host",odds:null,blurb:"Jesse Marsch's Canada opens at home in Toronto with the most talented squad in its history. Alphonso Davies and Jonathan David headline a team chasing the nation's first-ever World Cup win — they're 0-for-6 across 1986 and 2022."},
+  "Switzerland":{fl:"🇨🇭",g:"B",star:"Granit Xhaka · midfield general",hist:"13th appearance · serial Round-of-16ers",odds:null,blurb:"The Swiss have reached the knockouts at five straight major tournaments and are quietly the team nobody wants to face. Granit Xhaka's leadership and a deep, organized squad make them favorites in Group B."},
+  "Qatar":{fl:"🇶🇦",g:"B",star:"Akram Afif · Asian Player of the Year",hist:"2nd appearance · 2022 hosts",odds:null,blurb:"The 2022 hosts qualified on merit this time. Akram Afif is one of Asia's most gifted attackers, and Qatar arrives with something to prove after going winless on home soil four years ago."},
+  "Bosnia and Herzegovina":{fl:"🇧🇦",g:"B",star:"Edin Džeko · ageless at 40",hist:"2nd appearance · first since 2014",odds:null,blurb:"The Dragons won UEFA playoff A to reach their second-ever World Cup. Edin Džeko, still scoring at 40, leads an emotional return — they open against Canada in Toronto, home to one of the world's largest Bosnian diasporas."},
+  // Group C
+  "Brazil":{fl:"🇧🇷",g:"C",star:"Vinícius Júnior · the headline act",hist:"23rd appearance · record 5 titles",odds:"+950",blurb:"The only nation to play in every World Cup, now coached by Carlo Ancelotti. Vinícius Jr and Raphinha give the Seleção the most feared attack in the field — but Brazil hasn't lifted the trophy since 2002, an eternity by their standards."},
+  "Morocco":{fl:"🇲🇦",g:"C",star:"Achraf Hakimi · PSG superstar",hist:"7th appearance · historic SF in 2022",odds:null,blurb:"The Atlas Lions became the first African semifinalists in history in 2022, and this squad is arguably stronger. Hakimi and Brahim Díaz lead a side that fears absolutely no one — including Brazil, who they face on June 13."},
+  "Haiti":{fl:"🇭🇹",g:"C",star:"Duckens Nazon · veteran striker",hist:"2nd appearance · first since 1974",odds:null,blurb:"One of the tournament's great stories: Haiti qualified for its first World Cup in 52 years despite being unable to play home matches in Port-au-Prince. Every minute they play in this tournament is found money."},
+  "Scotland":{fl:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",g:"C",star:"Scott McTominay · Napoli hero",hist:"9th appearance · first since 1998",odds:null,blurb:"The Tartan Army ends a 28-year wait. McTominay arrives off the back of a Serie A title run, Andy Robertson brings Champions League pedigree, and Scotland's traveling support may be the tournament's loudest."},
+  // Group D
+  "United States":{fl:"🇺🇸",g:"D",star:"Christian Pulisic · Captain America",hist:"12th appearance · best: 3rd in 1930",odds:"≈25–1 · +138 to win Group D",blurb:"Mauricio Pochettino's hosts open tonight at SoFi Stadium with a generation built for this moment: Pulisic, McKennie, Weah, Balogun. The home crowd, the friendly group, the protected bracket — there has never been a better setup for a deep American run."},
+  "Paraguay":{fl:"🇵🇾",g:"D",star:"Julio Enciso · creative spark",hist:"9th appearance · first since 2010",odds:null,blurb:"La Albirroja returns after 16 years away, built on the meanest defense in South American qualifying. Tonight they get the honor — and the burden — of facing the hosts in the USA's opener."},
+  "Australia":{fl:"🇦🇺",g:"D",star:"Nestory Irankunda · teen winger",hist:"7th appearance · 6th straight",odds:null,blurb:"The Socceroos have made six consecutive World Cups and reached the knockouts in 2022. A young, athletic squad will scrap for every point in a winnable group."},
+  "Türkiye":{fl:"🇹🇷",g:"D",star:"Arda Güler · Real Madrid playmaker",hist:"3rd appearance · 3rd place in 2002",odds:null,blurb:"Winners of UEFA playoff C, the Turks return for the first time since their famous 2002 bronze. Arda Güler and Hakan Çalhanoğlu form one of the most technical midfields in the tournament — the USA's biggest group-stage threat."},
+  // Group E
+  "Germany":{fl:"🇩🇪",g:"E",star:"Jamal Musiala · joy in cleats",hist:"21st appearance · 4 titles",odds:"+1400",blurb:"Four titles, two straight group-stage exits. Musiala, Wirtz and Kimmich give Germany its most fluid attack in a decade, and a kind group offers a soft landing. The question is whether the old tournament DNA still lives in this squad."},
+  "Curaçao":{fl:"🇨🇼",g:"E",star:"Leandro Bacuna · captain",hist:"DEBUT · smallest nation ever at a WC",odds:null,blurb:"Population ~150,000 — the smallest country ever to reach a World Cup. The Dutch-Caribbean island's squad is stocked with Eredivisie experience, and their qualification was one of the great romances of the cycle."},
+  "Ivory Coast":{fl:"🇨🇮",g:"E",star:"Simon Adingra · direct and fearless",hist:"4th appearance · first since 2014",odds:null,blurb:"The reigning African champions are back at the World Cup after a 12-year absence. The Elephants' blend of athleticism and Ligue 1-honed technique makes them a nightmare draw for Germany and Ecuador."},
+  "Ecuador":{fl:"🇪🇨",g:"E",star:"Moisés Caicedo · elite destroyer",hist:"5th appearance",odds:null,blurb:"Quietly excellent through South American qualifying, conceding almost nothing. Caicedo anchors the midfield, Piero Hincapié marshals the back line — Ecuador might be the best defensive team in the tournament."},
+  // Group F
+  "Netherlands":{fl:"🇳🇱",g:"F",star:"Virgil van Dijk · the wall",hist:"12th appearance · 3× runners-up",odds:"+2000",blurb:"Three finals, zero trophies — the best team never to win it. Van Dijk, Gravenberch and Dumfries give the Oranje control and steel, but a tricky group with Japan and a loaded Sweden means no easy path."},
+  "Japan":{fl:"🇯🇵",g:"F",star:"Takefusa Kubo · magic touch",hist:"8th straight appearance",odds:null,blurb:"The team that beat Germany AND Spain in 2022 has only improved. Kubo, Mitoma and a core playing top European football make Japan a legitimate quarterfinal-or-better threat — and the Netherlands' opening problem."},
+  "Tunisia":{fl:"🇹🇳",g:"F",star:"Hannibal Mejbri · tempo-setter",hist:"7th appearance",odds:null,blurb:"The Eagles of Carthage qualified without conceding a single goal. They've never escaped a World Cup group — this organized, stubborn edition believes that ends now."},
+  "Sweden":{fl:"🇸🇪",g:"F",star:"Alexander Isak + Viktor Gyökeres",hist:"13th appearance · won UEFA playoff B",odds:null,blurb:"The scariest playoff winner imaginable: Isak and Gyökeres might be the most expensive strike pair on Earth. Sweden's route through the playoffs hides a roster that no top seed wanted in its group."},
+  // Group G
+  "Belgium":{fl:"🇧🇪",g:"G",star:"Kevin De Bruyne · one last run",hist:"15th appearance · 3rd in 2018",odds:"+4000",blurb:"The golden generation's farewell tour — De Bruyne and Lukaku remain, surrounded now by Doku, Openda and a hungry new wave. A gentle group should mean a long runway into the knockouts."},
+  "Egypt":{fl:"🇪🇬",g:"G",star:"Mohamed Salah · the king",hist:"4th appearance · first since 2018",odds:null,blurb:"Salah finally gets the World Cup stage his career deserves, at the peak of his powers after another monster season. Egypt's entire game plan flows through him — and that might be enough."},
+  "Iran":{fl:"🇮🇷",g:"G",star:"Mehdi Taremi · clinical",hist:"7th appearance · 4th straight",odds:null,blurb:"Team Melli has never reached a World Cup knockout round, but the round-of-32 format gives Asia's perennial qualifiers their best chance ever. Taremi's movement makes them dangerous in any single game."},
+  "New Zealand":{fl:"🇳🇿",g:"G",star:"Chris Wood · Premier League proven",hist:"3rd appearance · unbeaten in 2010",odds:null,blurb:"Fun fact: New Zealand is the only team to ever go through a World Cup unbeaten without advancing (three draws, 2010). Chris Wood's hold-up play gives the All Whites a real chance to spring a surprise."},
+  // Group H
+  "Spain":{fl:"🇪🇸",g:"H",star:"Lamine Yamal · the phenomenon",hist:"17th appearance · champions 2010",odds:"+450 · FAVORITES",blurb:"The Euro 2024 champions enter as betting favorites for a reason: Yamal is the most electrifying teenager since prime Messi, Pedri conducts midfield like nobody else, and the system never blinks. The highest floor in the field — and maybe the highest ceiling."},
+  "Cape Verde":{fl:"🇨🇻",g:"H",star:"Ryan Mendes · captain",hist:"DEBUT",odds:null,blurb:"Islands of ~500,000 people, now at a World Cup. The Blue Sharks' qualification was a continental shock, built on a diaspora squad with deep European experience. Drawing Spain first is brutal luck — and an unforgettable occasion."},
+  "Saudi Arabia":{fl:"🇸🇦",g:"H",star:"Salem Al-Dawsari · giant-killer",hist:"7th appearance",odds:null,blurb:"Never forget: they beat Argentina in 2022, the eventual champions' only loss. Al-Dawsari, the man who scored that screamer, returns — and the Green Falcons specialize in ruining favorites' days."},
+  "Uruguay":{fl:"🇺🇾",g:"H",star:"Federico Valverde · engine of chaos",hist:"15th appearance · 2 titles",odds:"+6500",blurb:"Marcelo Bielsa's Uruguay presses like a swarm and counters like a knife. Valverde and Núñez headline a squad that finished strong in qualifying — at 65–1, the two-time champions might be the best value on the board."},
+  // Group I
+  "France":{fl:"🇫🇷",g:"I",star:"Kylian Mbappé · inevitable",hist:"17th appearance · 2 titles · 2022 finalists",odds:"+475",blurb:"Finalists in three of the last four finals... wait, two of the last two. Mbappé scored a hat trick in a losing final and is back for revenge with Dembélé, Tchouaméni and the deepest talent pool in world football. Co-favorites, and nobody's surprised."},
+  "Senegal":{fl:"🇸🇳",g:"I",star:"Iliman Ndiaye · silk in tight spaces",hist:"4th appearance",odds:null,blurb:"The Lions of Teranga are perennially Africa's most complete team — fast, physical, and tournament-tested. Drawing France first is a rough opener, but this squad beat Ecuador and Qatar to make the 2022 knockouts and fears nobody."},
+  "Norway":{fl:"🇳🇴",g:"I",star:"Erling Haaland · 9 goals in qualifying... per month, it felt like",hist:"4th appearance · first since 1998",odds:"+3000 · top dark horse",blurb:"The dark horse everyone agrees on. Haaland scored at a historic rate in qualifying, Ødegaard supplies him, and Norway demolished its group. A first World Cup in 28 years — and the firepower to make it legendary."},
+  "Iraq":{fl:"🇮🇶",g:"I",star:"Aymen Hussein · target man",hist:"2nd appearance · first since 1986",odds:null,blurb:"Winners of the intercontinental playoff, the Lions of Mesopotamia return after 40 years. Their qualification sparked celebrations across the country — a reminder of what this tournament means."},
+  // Group J
+  "Argentina":{fl:"🇦🇷",g:"J",star:"Lionel Messi · sixth and final World Cup",hist:"19th appearance · 3 titles · DEFENDING CHAMPS",odds:"+950",blurb:"The champions return with Messi, 38, in a freer role and Julián Álvarez and Lautaro Martínez carrying the scoring load. No team has repeated since Brazil in 1962 — but no defending champion has ever had this much winning muscle memory either."},
+  "Algeria":{fl:"🇩🇿",g:"J",star:"Riyad Mahrez · the wand",hist:"5th appearance · first since 2014",odds:null,blurb:"The Desert Foxes are back after 12 years with a squad blending Mahrez's experience and a fearless new generation. The 2014 edition took eventual champions Germany to extra time — this one wants more."},
+  "Austria":{fl:"🇦🇹",g:"J",star:"Christoph Baumgartner · relentless",hist:"8th appearance · first since 1998",odds:null,blurb:"Ralf Rangnick has built the most aggressive pressing machine in Europe. Austria topped its qualifying group and won't change for anyone — including Argentina, who they face on June 22."},
+  "Jordan":{fl:"🇯🇴",g:"J",star:"Mousa Tamari · tricky winger",hist:"DEBUT",odds:null,blurb:"The 2023 Asian Cup finalists complete a remarkable rise with a first-ever World Cup. Drawing the champions in the group is daunting; making history just by being here is guaranteed."},
+  // Group K
+  "Portugal":{fl:"🇵🇹",g:"K",star:"Cristiano Ronaldo · the final chapter, at 41",hist:"9th appearance · best: SF 2006",odds:"+800",blurb:"Ronaldo's sixth World Cup — a men's record — comes with his best supporting cast ever: Bruno Fernandes, Vitinha, Rafael Leão, João Neves. Bookmakers have steadily shortened Portugal's odds. One last dance, with real title juice."},
+  "Uzbekistan":{fl:"🇺🇿",g:"K",star:"Abdukodir Khusanov · Man City defender",hist:"DEBUT",odds:null,blurb:"Central Asia's first World Cup team in the modern era. The White Wolves qualified directly behind a golden generation, with Khusanov already starring in the Premier League."},
+  "Colombia":{fl:"🇨🇴",g:"K",star:"Luis Díaz · prime-years brilliance",hist:"7th appearance",odds:"+4000",blurb:"Los Cafeteros went on a long unbeaten run through qualifying, with Luis Díaz at his peak and James Rodríguez rolling back the years. A genuine dark horse with the talent to win Group K outright."},
+  "DR Congo":{fl:"🇨🇩",g:"K",star:"Cédric Bakambu · poacher",hist:"2nd appearance · first since 1974 (as Zaire)",odds:null,blurb:"The Leopards ended a 52-year wait by winning the intercontinental playoff. A physical, athletic squad drawn from leagues across Europe will make every Group K match a battle."},
+  // Group L
+  "England":{fl:"🏴󠁧󠁢󠁥󠁮󠁧󠁬󠁢󠁿",g:"L",star:"Jude Bellingham + Harry Kane",hist:"17th appearance · champions 1966",odds:"+700",blurb:"Thomas Tuchel was hired for exactly this. Kane, Bellingham, Saka, Palmer, Foden — the deepest attacking pool England has ever had, and a manager who wins finals. Third favorites, and 60 years of hurt to end."},
+  "Croatia":{fl:"🇭🇷",g:"L",star:"Luka Modrić · maestro at 40",hist:"7th appearance · 2018 finalists, 3rd in 2022",odds:null,blurb:"Finalists, then bronze — Croatia simply does not go away. Modrić returns at 40 for one more miracle, and the opener against England is a rematch of the 2018 semifinal Croatia won."},
+  "Ghana":{fl:"🇬🇭",g:"L",star:"Mohammed Kudus · box-office",hist:"5th appearance",odds:null,blurb:"The Black Stars bring tournament pedigree and, in Kudus, one of the most watchable attackers alive. A group with England and Croatia is hard — but Ghana has beaten bigger names before."},
+  "Panama":{fl:"🇵🇦",g:"L",star:"Adalberto Carrasquilla · midfield brain",hist:"2nd appearance · first since 2018",odds:null,blurb:"Los Canaleros return after missing 2022, hungrier and better organized. Their 2018 debut brought zero points; this team's stated goal is Panama's first-ever World Cup win."}
+};
+
+const GROUPS = ["A","B","C","D","E","F","G","H","I","J","K","L"];
+const GROUP_TEAMS = {
+  A:["Mexico","South Africa","South Korea","Czechia"],
+  B:["Canada","Switzerland","Qatar","Bosnia and Herzegovina"],
+  C:["Brazil","Morocco","Haiti","Scotland"],
+  D:["United States","Paraguay","Australia","Türkiye"],
+  E:["Germany","Curaçao","Ivory Coast","Ecuador"],
+  F:["Netherlands","Japan","Tunisia","Sweden"],
+  G:["Belgium","Egypt","Iran","New Zealand"],
+  H:["Spain","Cape Verde","Saudi Arabia","Uruguay"],
+  I:["France","Senegal","Norway","Iraq"],
+  J:["Argentina","Algeria","Austria","Jordan"],
+  K:["Portugal","Uzbekistan","Colombia","DR Congo"],
+  L:["England","Croatia","Ghana","Panama"]
+};
+
+/* matches: s = [homeGoals, awayGoals] when played */
+const MATCHES = [
+  {d:"Jun 11",g:"A",h:"Mexico",a:"South Africa",s:[2,0],v:"Estadio Azteca, Mexico City",note:"3 red cards — a World Cup record"},
+  {d:"Jun 11",g:"A",h:"South Korea",a:"Czechia",s:[2,1],v:"Estadio Akron, Guadalajara",note:"Korea rallied from a goal down"},
+  {d:"Jun 12",g:"B",h:"Canada",a:"Bosnia and Herzegovina",t:"3:00 PM ET",v:"BMO Field, Toronto"},
+  {d:"Jun 12",g:"D",h:"United States",a:"Paraguay",t:"9:00 PM ET",v:"SoFi Stadium, Inglewood",note:"USMNT opener · free on Fox & Tubi"},
+  {d:"Jun 13",g:"B",h:"Qatar",a:"Switzerland",v:"San Francisco Bay Area"},
+  {d:"Jun 13",g:"C",h:"Brazil",a:"Morocco",v:"Lincoln Financial Field, Philadelphia",note:"Heavyweight clash of MD1"},
+  {d:"Jun 13",g:"C",h:"Haiti",a:"Scotland",v:"Gillette Stadium, Foxborough"},
+  {d:"Jun 14",g:"D",h:"Australia",a:"Türkiye",v:"BC Place, Vancouver"},
+  {d:"Jun 14",g:"E",h:"Germany",a:"Curaçao",v:"NRG Stadium, Houston",note:"Smallest WC nation ever debuts"},
+  {d:"Jun 14",g:"F",h:"Netherlands",a:"Japan",v:"AT&T Stadium, Dallas"},
+  {d:"Jun 14",g:"E",h:"Ivory Coast",a:"Ecuador",v:"Arrowhead Stadium, Kansas City"},
+  {d:"Jun 14",g:"F",h:"Sweden",a:"Tunisia",v:"Estadio BBVA, Monterrey"},
+  {d:"Jun 15",g:"H",h:"Spain",a:"Cape Verde",v:"Mercedes-Benz Stadium, Atlanta",note:"The favorites begin"},
+  {d:"Jun 15",g:"G",h:"Belgium",a:"Egypt",v:"Lumen Field, Seattle"},
+  {d:"Jun 15",g:"H",h:"Saudi Arabia",a:"Uruguay",v:"Hard Rock Stadium, Miami"},
+  {d:"Jun 15",g:"G",h:"Iran",a:"New Zealand",v:"SoFi Stadium, Inglewood"},
+  {d:"Jun 16",g:"I",h:"France",a:"Senegal",v:"MetLife Stadium, East Rutherford"},
+  {d:"Jun 16",g:"I",h:"Iraq",a:"Norway",v:"Gillette Stadium, Foxborough",note:"Haaland's World Cup debut"},
+  {d:"Jun 16",g:"J",h:"Argentina",a:"Algeria",v:"Arrowhead Stadium, Kansas City",note:"The champions begin their defense"},
+  {d:"Jun 17",g:"J",h:"Austria",a:"Jordan",v:"Levi's Stadium, Santa Clara"},
+  {d:"Jun 17",g:"K",h:"Portugal",a:"DR Congo",v:"NRG Stadium, Houston",note:"Ronaldo's record 6th World Cup"},
+  {d:"Jun 17",g:"L",h:"England",a:"Croatia",v:"AT&T Stadium, Arlington",note:"2018 semifinal rematch"},
+  {d:"Jun 17",g:"L",h:"Ghana",a:"Panama",v:"BMO Field, Toronto"},
+  {d:"Jun 17",g:"K",h:"Uzbekistan",a:"Colombia",v:"Estadio Azteca, Mexico City"},
+  // Matchday 2
+  {d:"Jun 18",g:"A",h:"Czechia",a:"South Africa",v:"Atlanta"},
+  {d:"Jun 18",g:"B",h:"Switzerland",a:"Bosnia and Herzegovina",v:"Inglewood"},
+  {d:"Jun 18",g:"B",h:"Canada",a:"Qatar",v:"Vancouver"},
+  {d:"Jun 18",g:"A",h:"Mexico",a:"South Korea",v:"Guadalajara"},
+  {d:"Jun 19",g:"D",h:"United States",a:"Australia",v:"Seattle"},
+  {d:"Jun 19",g:"C",h:"Scotland",a:"Morocco",v:"Foxborough"},
+  {d:"Jun 19",g:"C",h:"Brazil",a:"Haiti",v:"Philadelphia"},
+  {d:"Jun 19",g:"D",h:"Türkiye",a:"Paraguay",v:"Santa Clara"},
+  {d:"Jun 20",g:"F",h:"Netherlands",a:"Sweden",v:"Houston"},
+  {d:"Jun 20",g:"E",h:"Germany",a:"Ivory Coast",v:"Toronto"},
+  {d:"Jun 20",g:"E",h:"Ecuador",a:"Curaçao",v:"Kansas City"},
+  {d:"Jun 20",g:"F",h:"Tunisia",a:"Japan",v:"Monterrey"},
+  {d:"Jun 21",g:"H",h:"Spain",a:"Saudi Arabia",v:"TBC"},
+  {d:"Jun 21",g:"G",h:"Belgium",a:"Iran",v:"TBC"},
+  {d:"Jun 21",g:"H",h:"Uruguay",a:"Cape Verde",v:"TBC"},
+  {d:"Jun 21",g:"G",h:"New Zealand",a:"Egypt",v:"TBC"},
+  {d:"Jun 22",g:"J",h:"Argentina",a:"Austria",v:"TBC"},
+  {d:"Jun 22",g:"I",h:"France",a:"Iraq",v:"TBC"},
+  {d:"Jun 22",g:"I",h:"Norway",a:"Senegal",v:"TBC"},
+  {d:"Jun 22",g:"J",h:"Jordan",a:"Algeria",v:"TBC"},
+  {d:"Jun 23",g:"K",h:"Portugal",a:"Uzbekistan",v:"TBC"},
+  {d:"Jun 23",g:"L",h:"England",a:"Ghana",v:"TBC"},
+  {d:"Jun 23",g:"L",h:"Panama",a:"Croatia",v:"TBC"},
+  {d:"Jun 23",g:"K",h:"Colombia",a:"DR Congo",v:"TBC"},
+  // Matchday 3
+  {d:"Jun 24",g:"A",h:"Czechia",a:"Mexico",v:"Mexico City"},
+  {d:"Jun 24",g:"A",h:"South Africa",a:"South Korea",v:"Monterrey"},
+  {d:"Jun 24",g:"B",h:"Switzerland",a:"Canada",v:"Toronto"},
+  {d:"Jun 24",g:"B",h:"Bosnia and Herzegovina",a:"Qatar",v:"Vancouver"},
+  {d:"Jun 24",g:"C",h:"Scotland",a:"Brazil",v:"Foxborough"},
+  {d:"Jun 24",g:"C",h:"Morocco",a:"Haiti",v:"East Rutherford"},
+  {d:"Jun 25",g:"D",h:"Türkiye",a:"United States",v:"SoFi Stadium, Inglewood"},
+  {d:"Jun 25",g:"D",h:"Paraguay",a:"Australia",v:"Santa Clara"},
+  {d:"Jun 25",g:"E",h:"Ecuador",a:"Germany",v:"East Rutherford"},
+  {d:"Jun 25",g:"E",h:"Curaçao",a:"Ivory Coast",v:"Philadelphia"},
+  {d:"Jun 25",g:"F",h:"Japan",a:"Sweden",v:"TBC"},
+  {d:"Jun 25",g:"F",h:"Tunisia",a:"Netherlands",v:"TBC"},
+  {d:"Jun 26",g:"G",h:"Belgium",a:"New Zealand",v:"TBC"},
+  {d:"Jun 26",g:"G",h:"Egypt",a:"Iran",v:"TBC"},
+  {d:"Jun 26",g:"H",h:"Spain",a:"Uruguay",v:"TBC"},
+  {d:"Jun 26",g:"H",h:"Cape Verde",a:"Saudi Arabia",v:"TBC"},
+  {d:"Jun 27",g:"I",h:"France",a:"Norway",v:"TBC"},
+  {d:"Jun 27",g:"I",h:"Senegal",a:"Iraq",v:"TBC"},
+  {d:"Jun 27",g:"J",h:"Argentina",a:"Jordan",v:"TBC"},
+  {d:"Jun 27",g:"J",h:"Algeria",a:"Austria",v:"TBC"},
+  {d:"Jun 27",g:"K",h:"Portugal",a:"Colombia",v:"TBC"},
+  {d:"Jun 27",g:"K",h:"DR Congo",a:"Uzbekistan",v:"TBC"},
+  {d:"Jun 27",g:"L",h:"England",a:"Panama",v:"TBC"},
+  {d:"Jun 27",g:"L",h:"Croatia",a:"Ghana",v:"TBC"}
+];
+
+const ODDS = [
+  {t:"Spain",ml:"+450",ip:18.2},
+  {t:"France",ml:"+475",ip:17.4},
+  {t:"England",ml:"+700",ip:12.5},
+  {t:"Portugal",ml:"+800",ip:11.1},
+  {t:"Brazil",ml:"+950",ip:9.5},
+  {t:"Argentina",ml:"+950",ip:9.5},
+  {t:"Germany",ml:"+1400",ip:6.7},
+  {t:"Netherlands",ml:"+2000",ip:4.8},
+  {t:"Norway",ml:"+3000",ip:3.2,dark:true},
+  {t:"Belgium",ml:"+4000",ip:2.4,dark:true},
+  {t:"Colombia",ml:"+4000",ip:2.4,dark:true},
+  {t:"Uruguay",ml:"+6500",ip:1.5,dark:true}
+];
+
+/* ================= HELPERS ================= */
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const fl = t => TEAMS[t] ? TEAMS[t].fl : "🏳️";
+
+function computeStandings(group){
+  const table = {};
+  GROUP_TEAMS[group].forEach(t => table[t] = {team:t,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0});
+  MATCHES.filter(m => m.g===group && m.s).forEach(m=>{
+    const H=table[m.h], A=table[m.a];
+    H.p++;A.p++;H.gf+=m.s[0];H.ga+=m.s[1];A.gf+=m.s[1];A.ga+=m.s[0];
+    if(m.s[0]>m.s[1]){H.w++;A.l++;H.pts+=3}
+    else if(m.s[0]<m.s[1]){A.w++;H.l++;A.pts+=3}
+    else{H.d++;A.d++;H.pts++;A.pts++}
+  });
+  return Object.values(table).sort((a,b)=>
+    b.pts-a.pts || (b.gf-b.ga)-(a.gf-a.ga) || b.gf-a.gf || a.team.localeCompare(b.team));
+}
+
+/* ================= RENDER: matches ================= */
+function matchCard(m){
+  const played = !!m.s;
+  return `<div class="match">
+    <div class="meta">
+      <span>Group ${m.g} · ${m.d}</span>
+      <span class="${played?'status-ft':'status-today'}">${played?'Full time':(m.t||'Upcoming')}</span>
+    </div>
+    <div class="row"><span class="team"><span class="fl">${fl(m.h)}</span>${esc(m.h)}</span><span class="score ${played?'':'tbd'}">${played?m.s[0]:'–'}</span></div>
+    <div class="row"><span class="team"><span class="fl">${fl(m.a)}</span>${esc(m.a)}</span><span class="score ${played?'':'tbd'}">${played?m.s[1]:'–'}</span></div>
+    <div class="venue">${esc(m.v)}</div>
+    ${m.note?`<div class="note">${esc(m.note)}</div>`:''}
+  </div>`;
+}
+document.getElementById('today-matches').innerHTML =
+  MATCHES.filter(m=>m.d==="Jun 12").map(matchCard).join('');
+document.getElementById('played-matches').innerHTML =
+  MATCHES.filter(m=>m.s).map(matchCard).join('');
+
+/* ================= RENDER: groups ================= */
+const groupHints = {A:"Hosts Mexico",B:"Hosts Canada",C:"Brazil & Morocco",D:"Hosts USA",E:"Germany",F:"Group of sneaky death",G:"Belgium & Salah",H:"The favorites",I:"France & Haaland",J:"The champions",K:"Ronaldo's farewell",L:"England"};
+function renderGroups(){
+  document.getElementById('groups-container').innerHTML = GROUPS.map(g=>{
+    const rows = computeStandings(g).map((r,i)=>`
+      <tr class="clickable ${i<2?'qpos':''}" data-team="${esc(r.team)}" tabindex="0" role="button" aria-label="Open ${esc(r.team)} profile">
+        <td class="tname"><span class="fl">${fl(r.team)}</span>${esc(r.team)}</td>
+        <td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td>
+        <td>${r.gf-r.ga>0?'+':''}${r.gf-r.ga}</td><td class="pts">${r.pts}</td>
+      </tr>`).join('');
+    return `<div class="gcard">
+      <header><span class="gname">Group <span>${g}</span></span><span class="ghint">${groupHints[g]}</span></header>
+      <table class="standings">
+        <thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join('');
+}
+renderGroups();
+
+/* ================= RENDER: teams ================= */
+const gf = document.getElementById('group-filter');
+GROUPS.forEach(g=>{const o=document.createElement('option');o.value=g;o.textContent="Group "+g;gf.appendChild(o)});
+function renderTeams(){
+  const q = document.getElementById('team-search').value.toLowerCase();
+  const grp = gf.value;
+  const names = Object.keys(TEAMS).filter(t=>{
+    const d = TEAMS[t];
+    if(grp && d.g!==grp) return false;
+    if(!q) return true;
+    return (t+' '+d.star+' '+d.blurb+' '+d.hist).toLowerCase().includes(q);
+  });
+  document.getElementById('teams-container').innerHTML = names.map(t=>{
+    const d=TEAMS[t];
+    return `<button class="tcard" data-team="${esc(t)}" aria-label="Open ${esc(t)} profile">
+      <span class="top"><span class="fl">${d.fl}</span><span class="grp">Grp ${d.g}</span></span>
+      <span class="nm">${esc(t)}</span>
+      <span class="star">⭐ ${esc(d.star)}</span>
+      ${d.odds?`<span class="odds-chip">${esc(d.odds)}</span>`:''}
+    </button>`;
+  }).join('') || '<p style="color:var(--chalk-dim)">No teams match that search.</p>';
+}
+renderTeams();
+document.getElementById('team-search').addEventListener('input',renderTeams);
+gf.addEventListener('change',renderTeams);
+
+/* ================= RENDER: odds ================= */
+const maxIp = Math.max(...ODDS.map(o=>o.ip));
+document.getElementById('odds-board').innerHTML = ODDS.map((o,i)=>`
+  <div class="odd-row ${o.dark?'dark':''}">
+    <span class="rank">${String(i+1).padStart(2,'0')}</span>
+    <span class="tm"><span class="fl">${fl(o.t)}</span>${esc(o.t)}${o.dark?' 🐎':''}</span>
+    <span class="bar-track"><span class="bar-fill" data-w="${(o.ip/maxIp*100).toFixed(1)}"></span></span>
+    <span class="figures"><div class="ml">${o.ml}</div><div class="ip">${o.ip}% implied</div></span>
+  </div>`).join('');
+function animateBars(){
+  document.querySelectorAll('.bar-fill').forEach(b=>{b.style.width=b.dataset.w+'%'});
+}
+
+/* ================= RENDER: schedule ================= */
+const dayOrder = [...new Set(MATCHES.map(m=>m.d))];
+document.getElementById('schedule-container').innerHTML = dayOrder.map(d=>{
+  const dayM = MATCHES.filter(m=>m.d===d);
+  const isToday = d==="Jun 12";
+  return `<div class="day-block">
+    <h3><span>${d}</span>${isToday?' · Today':''}${d==="Jun 11"?' · Opening day':''}</h3>
+    ${dayM.map(m=>`<div class="sched-row">
+      <span class="gbadge">Grp ${m.g}</span>
+      <span class="fixture-name">${fl(m.h)} ${esc(m.h)} <span style="color:var(--chalk-dim)">vs</span> ${esc(m.a)} ${fl(m.a)}</span>
+      ${m.s?`<span class="res">${m.s[0]}–${m.s[1]}</span>`:(m.t?`<span style="color:var(--red);font-weight:700;font-size:.78rem">${m.t}</span>`:'')}
+      <span class="city">${esc(m.v)}</span>
+    </div>`).join('')}
+  </div>`;
+}).join('');
+
+/* ================= MODAL ================= */
+const modalBg = document.getElementById('modal-bg');
+let lastFocus = null;
+function openTeam(name){
+  const d = TEAMS[name]; if(!d) return;
+  lastFocus = document.activeElement;
+  const fixtures = MATCHES.filter(m=>m.h===name||m.a===name).map(m=>{
+    const opp = m.h===name?m.a:m.h;
+    const res = m.s ? (m.h===name?`${m.s[0]}–${m.s[1]}`:`${m.s[1]}–${m.s[0]}`) : (m.t||'');
+    let tagcol='';
+    if(m.s){const my=m.h===name?m.s[0]:m.s[1],th=m.h===name?m.s[1]:m.s[0];tagcol = my>th?' (W)':my<th?' (L)':' (D)';}
+    return `<div class="fixture">
+      <span class="fdate">${m.d}</span>
+      <span style="flex:1">${m.h===name?'vs':'at'} ${fl(opp)} ${esc(opp)}</span>
+      <span class="fscore">${res}${tagcol}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('modal-content').innerHTML = `
+    <div class="mhead"><span class="fl">${d.fl}</span>
+      <div><div class="mgroup">Group ${d.g}</div><h3 id="modal-title">${esc(name)}</h3></div>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="fl-label">Star player</div><div class="fl-val">⭐ ${esc(d.star)}</div></div>
+      <div class="fact"><div class="fl-label">World Cup pedigree</div><div class="fl-val">${esc(d.hist)}</div></div>
+      ${d.odds?`<div class="fact" style="grid-column:1/-1"><div class="fl-label">Title odds</div><div class="fl-val gold">${esc(d.odds)}</div></div>`:''}
+    </div>
+    <h4>The Story</h4>
+    <p class="blurb">${esc(d.blurb)}</p>
+    <h4>Group ${d.g} Fixtures</h4>
+    ${fixtures}`;
+  modalBg.classList.add('open');
+  modalBg.setAttribute('aria-hidden','false');
+  document.getElementById('modal-close').focus();
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  modalBg.classList.remove('open');
+  modalBg.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+  if(lastFocus) lastFocus.focus();
+}
+document.getElementById('modal-close').addEventListener('click',closeModal);
+modalBg.addEventListener('click',e=>{if(e.target===modalBg)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modalBg.classList.contains('open'))closeModal()});
+document.addEventListener('click',e=>{
+  const el = e.target.closest('[data-team]');
+  if(el) openTeam(el.dataset.team);
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    const el = e.target.closest('tr[data-team]');
+    if(el) openTeam(el.dataset.team);
+  }
+});
+
+/* ================= TABS ================= */
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(t=>{
+    const on = t.dataset.tab===id;
+    t.classList.toggle('active',on);
+    t.setAttribute('aria-selected',on);
+  });
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+id));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='odds') setTimeout(animateBars,80);
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));
+</script>
+</body>
+</html>

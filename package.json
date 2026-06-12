@@ -1,0 +1,12 @@
+{
+  "name": "wc26-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Field of 48 — single-file World Cup 2026 dashboard, hosted on Cloudflare Pages.",
+  "type": "module",
+  "scripts": {
+    "smoke": "node scripts/smoke-check.mjs",
+    "deploy": "npx --yes wrangler@latest pages deploy public --project-name wc26-dashboard",
+    "deploy:prod": "npx --yes wrangler@latest pages deploy public --project-name wc26-dashboard --branch main"
+  }
+}
