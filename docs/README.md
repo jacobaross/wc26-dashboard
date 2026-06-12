@@ -11,6 +11,7 @@ Single-file, zero-dependency HTML dashboard for the 2026 FIFA World Cup (USA / C
 | `DATA_MODEL.md` | Schema reference for the embedded JS data (TEAMS, MATCHES, ODDS, etc.) plus a state snapshot as of Jun 12. |
 | `DESIGN.md` | Design system: tokens, typography, signature elements, and rules so future edits stay on-brand. |
 | `AGENT_BRIEF.md` | Suggested standing task definition for Hermes (update cadence, sources, approval boundaries, done-criteria). |
+| `HOSTING.md` | Live URL, hosting decisions, and Cloudflare/custom-domain migration notes. |
 
 ## Quick start
 

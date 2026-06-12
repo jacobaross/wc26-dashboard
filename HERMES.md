@@ -10,9 +10,9 @@ This repo hosts Jacob's "Field of 48" World Cup 2026 dashboard.
 - Never invent scores. Confirm final results from reliable public sources before editing.
 
 ## Hosting
-- Cloudflare Pages project: `wc26-dashboard`.
-- Preferred production domain: `wc26.jacobross.com` if the `jacobross.com` zone is available.
-- Deploy with `npm run deploy:prod` from this repo once Cloudflare auth is available.
+- Current production: GitHub Pages at `https://jacobaross.github.io/wc26-dashboard/`.
+- Cloudflare Pages config is staged (`wrangler.toml`, deploy scripts), but Cloudflare auth is not available locally yet.
+- Preferred long-term domain: `wc26.jacobross.com`; see `docs/HOSTING.md`.
 
 ## Docs
 - Maintenance docs live under `docs/`.
