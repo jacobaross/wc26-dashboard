@@ -29,6 +29,12 @@ const allowedUrl = url =>
 assert(urls.every(allowedUrl), `Unexpected external URL(s): ${urls.filter(u => !allowedUrl(u)).join(', ')}`);
 
 assert(/id="live-mode-root"/.test(html), 'Missing Live Mode root above the hero.');
+assert(/team-crest/.test(html), 'Live Mode should render logo-style team crests.');
+assert(/live-pitch/.test(html), 'Live Mode should include a pitch graphic.');
+assert(/pitch-marker/.test(html), 'Live Mode should render field event/pressure markers.');
+assert(/live-stat-grid/.test(html), 'Live Mode should include a stat panel.');
+assert(/function buildLiveStats/.test(html), 'Live Mode should derive event-feed stats.');
+assert(/function pitchViz/.test(html), 'Live Mode should render field/event visualization.');
 assert(/data-tab="players"/.test(html), 'Missing Players tab button.');
 assert(/id="panel-players"/.test(html), 'Missing Players tab panel.');
 assert(/id="player-search"/.test(html), 'Missing player search control.');

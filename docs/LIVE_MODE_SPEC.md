@@ -56,6 +56,16 @@ Rules:
 - Uses `aria-live="polite"` for score/status updates.
 - Fallback: if APIs fail, embedded schedule still renders and live UI stays hidden rather than showing stale/invented scores.
 
+## Live Mode visual layer
+
+The live card should feel like a broadcast command center for casual fans:
+
+- **Logo-style team crests** are generated in CSS from the local flag emoji plus a 3-letter country code. These are not official federation logos, and that is intentional: no hotlinked marks/assets.
+- **Pitch graphic** renders with CSS only: field stripes, halfway line, center circle, boxes, pressure ball marker, and recent key event pins.
+- **Stats panel** uses the FIFA timeline event feed when available. Current rows are Goals, Shots, Fouls, and Cards. Label the note clearly so casual viewers understand these are event-feed stats, not a betting/pro analytics feed.
+- **Fan note** explains what the visual means in plain English; avoid unexplained xG/PPDA/stathead jargon.
+- If timeline stats are unavailable, show the visual shell and a note that stats will populate from the public feed. Do not invent possession/shots.
+
 ## Streaming/no-cable display
 
 Use text/logo-style badges, not hotlinked official logos:

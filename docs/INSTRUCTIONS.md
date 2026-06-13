@@ -42,7 +42,8 @@ Also date-pinned, lower cadence: the Groups tab tag ("Live · Jun 12"), the Odds
 ## 2a. Live Mode, watch badges, and story photos
 
 - Live Mode renders from runtime public data plus optional `MATCHES[n].api`, `watch`, and `live` fields. Do **not** put in-progress scores in `s`; standings only consume verified final `s` scores.
-- The browser polls FIFA public match data every minute for today's API-enabled fixtures and uses timeline events for goal/card context. If the public feed fails, hide/leave Live Mode stale rather than inventing facts.
+- The browser polls FIFA public match data every minute for today's API-enabled fixtures and uses timeline events for goal/card context, pitch markers, and event-feed stat bars. If the public feed fails, hide/leave Live Mode stale rather than inventing facts.
+- Live Mode uses CSS-only logo-style team crests (flag + country code), not official/hotlinked federation logos. Keep this no-hotlink rule unless local/licensed-safe assets are deliberately added.
 - `watch` is display-only. Use text/logo-style badges such as `FOX`, `Tubi`, `Telemundo`, `Peacock`; do not hotlink official logos.
 - Storyline companion images live under `public/img/storylines/` as optimized local WebP assets. Avoid external image URLs so the single-file smoke check stays portable.
 - Mobile rules: one live game full width, two games side by side above 640px, stacked under 640px; badges wrap.
