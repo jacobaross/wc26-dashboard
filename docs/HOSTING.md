@@ -4,14 +4,16 @@
 
 - Repo: https://github.com/jacobaross/wc26-dashboard
 - Live site: https://jacobaross.github.io/wc26-dashboard/
+- Target custom domain: https://wc26.jacobross.com/
 - Host: GitHub Pages via `.github/workflows/pages.yml`
 - Source artifact: `public/index.html`
+- Custom domain artifact: `public/CNAME`
 
 GitHub Pages is the live fallback because Cloudflare auth was not available locally and `jacobross.com` DNS currently resolves to Bluehost nameservers (`ns1.bluehost.com`, `ns2.bluehost.com`), not Cloudflare.
 
 ## Preferred long-term setup
 
-Use `wc26.jacobross.com` once Jacob wants it on his domain.
+Use `wc26.jacobross.com` as the primary public URL.
 
 Two clean paths:
 
