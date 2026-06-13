@@ -21,6 +21,28 @@ Keyed by display name (the canonical team id used everywhere — `MATCHES`, `GRO
 
 Canonical name gotchas: `"United States"` (not USA), `"Bosnia and Herzegovina"` (full), `"Türkiye"` (with diaeresis), `"DR Congo"`, `"Ivory Coast"`, `"Czechia"`, `"South Korea"`. England and Scotland use the subdivision flag emoji sequences — copy them, don't retype.
 
+## PLAYERS / PLAYER_STATS / PLAYER_SPOTLIGHTS
+
+`PLAYERS` is a normalized roster snapshot generated from FIFA's public squads endpoint by `scripts/sync-players.mjs`. It currently contains 1,248 players: 48 teams × 26 players.
+
+```js
+{
+  id: "390267",        // FIFA IdPlayer string
+  name: "Christian Pulisic",
+  short: "Christian Pulisic",
+  team: "United States", // canonical TEAMS key
+  group: "D",
+  num: 10,
+  pos: "Forward",
+  age: 27,             // age on tournament kickoff date
+  birth: "1998-09-18",
+  h: 177,              // cm, nullable
+  w: 69                // kg, nullable
+}
+```
+
+`PLAYER_STATS` is sparse and keyed by `id`; missing rows render as “Yet to appear.” `PLAYER_SPOTLIGHTS` is the editorial casual-fan layer keyed by `id` with `bucket`, `tag`, `hook`, `role`, and `watch`. See `PLAYER_GUIDE_SPEC.md` for source URLs and refresh rules.
+
 ## GROUPS / GROUP_TEAMS
 
 `GROUPS` is the array `["A"…"L"]`. `GROUP_TEAMS` maps each letter to its four team names. Final — these never change.

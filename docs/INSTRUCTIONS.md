@@ -47,6 +47,19 @@ Also date-pinned, lower cadence: the Groups tab tag ("Live · Jun 12"), the Odds
 - Storyline companion images live under `public/img/storylines/` as optimized local WebP assets. Avoid external image URLs so the single-file smoke check stays portable.
 - Mobile rules: one live game full width, two games side by side above 640px, stacked under 640px; badges wrap.
 
+## 2b. Player Guide updates
+
+- Players tab data is generated, not hand-entered. To refresh roster/stat rows, run:
+  ```bash
+  npm run sync:players
+  npm run smoke
+  ```
+- `PLAYERS` should stay a normalized snapshot of FIFA roster data: 1,248 players, 26 per team.
+- `PLAYER_STATS` is sparse tournament-stat data; missing means “Yet to appear,” not an error.
+- `PLAYER_SPOTLIGHTS` is editorial copy for casual fans. Keep it plain-English: why the player matters, what role they play, and one concrete thing to watch.
+- Do not hotlink player headshots in v1. If adding imagery later, use local/licensed-safe assets and update smoke checks.
+- See `docs/PLAYER_GUIDE_SPEC.md` for source URLs, mapping rules, and verification.
+
 ## 3. Updating odds
 
 `ODDS` array, top 12 only by design (board gets noisy beyond that):

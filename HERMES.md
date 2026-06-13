@@ -22,6 +22,7 @@ This repo hosts Jacob's "Field of 48" World Cup 2026 dashboard.
 - `docs/DESIGN.md` is the design system; preserve the stadium-at-night visual language.
 - `docs/AGENT_BRIEF.md` is the standing context for future Gus/agent work.
 - `docs/LIVE_MODE_SPEC.md` captures the current live-mode/mobile/storyline improvement direction.
+- `docs/PLAYER_GUIDE_SPEC.md` captures the Players tab data model, sync script, and casual-fan copy rules.
 
 ## Future improvement workflow
 - Start by checking `git status --short --branch`; do not trample existing uncommitted work.

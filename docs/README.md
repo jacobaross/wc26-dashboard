@@ -13,6 +13,7 @@ Single-file, zero-dependency HTML dashboard for the 2026 FIFA World Cup (USA / C
 | `AGENT_BRIEF.md` | Suggested standing task definition for Hermes (update cadence, sources, approval boundaries, done-criteria). |
 | `HOSTING.md` | Live URL, hosting decisions, and Cloudflare/custom-domain migration notes. |
 | `LIVE_MODE_SPEC.md` | Live Mode, streaming badges, storyline imagery, and mobile upgrade spec. |
+| `PLAYER_GUIDE_SPEC.md` | Players tab source/data model, sync script, spotlight copy rules, and verification. |
 
 ## Quick start
 
@@ -26,7 +27,7 @@ External dependencies: only Google Fonts (Anton + Archivo) via CDN. The page deg
 
 ## Maintenance model in one sentence
 
-All tournament state lives in plain JS objects near the top of the `<script>` block in `index.html`; standings, fixtures, and team profiles re-render automatically from that data — so "updating the dashboard" means editing a few array entries, never touching markup or CSS.
+All tournament state lives in plain JS objects near the top of the `<script>` block in `index.html`; standings, fixtures, team profiles, and the player directory re-render automatically from that data — so routine dashboard updates mean editing/regenerating data objects, not hand-editing generated markup.
 
 ## Known gaps as of handoff
 

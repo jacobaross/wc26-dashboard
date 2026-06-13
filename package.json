@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "smoke": "node scripts/smoke-check.mjs",
+    "sync:players": "node scripts/sync-players.mjs",
     "deploy": "npx --yes wrangler@latest pages deploy public --project-name wc26-dashboard",
     "deploy:prod": "npx --yes wrangler@latest pages deploy public --project-name wc26-dashboard --branch main"
   }
