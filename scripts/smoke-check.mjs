@@ -21,12 +21,28 @@ assert(/:focus-visible/.test(html), 'Missing :focus-visible accessibility styles
 assert(/prefers-reduced-motion/.test(html), 'Missing prefers-reduced-motion accessibility block.');
 
 const urls = [...html.matchAll(/https?:\/\/[^"')\s<>]+/g)].map(m => m[0]);
-const allowedUrl = url => url.startsWith('https://fonts.googleapis.com') || url.startsWith('https://fonts.gstatic.com');
+const allowedUrl = url =>
+  url.startsWith('https://fonts.googleapis.com') ||
+  url.startsWith('https://fonts.gstatic.com') ||
+  url.startsWith('https://api.fifa.com/api/v3/') ||
+  url.startsWith('https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/');
 assert(urls.every(allowedUrl), `Unexpected external URL(s): ${urls.filter(u => !allowedUrl(u)).join(', ')}`);
+
+assert(/id="live-mode-root"/.test(html), 'Missing Live Mode root above the hero.');
+assert(/class="stream-badge/.test(html), 'Missing watch/stream badge markup or renderer.');
+assert(/setInterval\(refreshLiveMode,\s*60000\)/.test(html), 'Live Mode should poll every 60 seconds.');
+assert(/function shouldKeepPolling/.test(html), 'Missing explicit Live Mode polling stop guard.');
+assert(/m\.live\s*=\s*null/.test(html) && /m\.liveError/.test(html), 'Live feed failures should clear stale live state.');
+const storylineRefs = [...html.matchAll(/img\/storylines\/[^"']+\.webp/g)].map(m => m[0]);
+assert(storylineRefs.length >= 6, `Expected at least 6 local storyline image references, found ${storylineRefs.length}.`);
+for (const ref of storylineRefs) {
+  assert(fs.existsSync(path.join(root, 'public', ref)), `Missing local storyline image asset: ${ref}`);
+}
 
 const scriptMatches = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)];
 assert(scriptMatches.length === 1, `Expected exactly one inline script block, found ${scriptMatches.length}.`);
 const script = scriptMatches[0]?.[1] ?? '';
+const todayPinnedFromScript = (script.match(/const\s+TODAY_DATE\s*=\s*"([^"]+)"/) || script.match(/MATCHES\.filter\(m=>m\.d==="([^"]+)"\)/) || [])[1] || null;
 try {
   new vm.Script(script, { filename: 'public/index.html<script>' });
 } catch (err) {
@@ -39,9 +55,9 @@ assert(markerIdx > -1, 'Could not find helpers marker after data block.');
 let snapshot = null;
 if (markerIdx > -1) {
   const dataPart = script.slice(0, markerIdx);
-  const checker = `\n(function(){\n  function standings(group){\n    const table = {};\n    GROUP_TEAMS[group].forEach(t => table[t] = {team:t,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0});\n    MATCHES.filter(m => m.g===group && m.s).forEach(m=>{\n      const H=table[m.h], A=table[m.a];\n      H.p++;A.p++;H.gf+=m.s[0];H.ga+=m.s[1];A.gf+=m.s[1];A.ga+=m.s[0];\n      if(m.s[0]>m.s[1]){H.w++;A.l++;H.pts+=3}\n      else if(m.s[0]<m.s[1]){A.w++;H.l++;A.pts+=3}\n      else{H.d++;A.d++;H.pts++;A.pts++}\n    });\n    return Object.values(table).sort((a,b)=>\n      b.pts-a.pts || (b.gf-b.ga)-(a.gf-a.ga) || b.gf-a.gf || a.team.localeCompare(b.team));\n  }\n  globalThis.__snapshot = {\n    teams: TEAMS, groups: GROUPS, groupTeams: GROUP_TEAMS, matches: MATCHES, odds: ODDS,\n    groupA: standings('A'),\n    todayPinned: (scriptText.match(/MATCHES\\.filter\\(m=>m\\.d===\"([^\"]+)\"\\)/)||[])[1] || null,\n    chip: (htmlText.match(/Matchday [^<]+/)||[])[0] || null\n  };\n})();`;
+  const checker = `\n(function(){\n  function standings(group){\n    const table = {};\n    GROUP_TEAMS[group].forEach(t => table[t] = {team:t,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0});\n    MATCHES.filter(m => m.g===group && m.s).forEach(m=>{\n      const H=table[m.h], A=table[m.a];\n      H.p++;A.p++;H.gf+=m.s[0];H.ga+=m.s[1];A.gf+=m.s[1];A.ga+=m.s[0];\n      if(m.s[0]>m.s[1]){H.w++;A.l++;H.pts+=3}\n      else if(m.s[0]<m.s[1]){A.w++;H.l++;A.pts+=3}\n      else{H.d++;A.d++;H.pts++;A.pts++}\n    });\n    return Object.values(table).sort((a,b)=>\n      b.pts-a.pts || (b.gf-b.ga)-(a.gf-a.ga) || b.gf-a.gf || a.team.localeCompare(b.team));\n  }\n  globalThis.__snapshot = {\n    teams: TEAMS, groups: GROUPS, groupTeams: GROUP_TEAMS, matches: MATCHES, odds: ODDS,\n    groupA: standings('A'),\n    todayPinned: todayPinnedFromScript,\n    chip: (htmlText.match(/Matchday [^<]+/)||[])[0] || null\n  };\n})();`;
   try {
-    const context = { globalThis: {}, scriptText: script, htmlText: html };
+    const context = { globalThis: {}, scriptText: script, htmlText: html, todayPinnedFromScript };
     context.globalThis = context;
     vm.runInNewContext(dataPart + checker, context, { filename: 'dashboard-data-check.vm' });
     snapshot = context.__snapshot;

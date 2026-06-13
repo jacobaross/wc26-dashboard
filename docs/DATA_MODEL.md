@@ -36,7 +36,10 @@ Canonical name gotchas: `"United States"` (not USA), `"Bosnia and Herzegovina"` 
   s: [2,1],               // OPTIONAL — score [h,a]; presence of s == match played
   t: "9:00 PM ET",        // OPTIONAL — kickoff time, only for unplayed matches
   v: "SoFi Stadium, Inglewood",  // venue ("TBC" for some Jun 21–27 games)
-  note: "…"               // OPTIONAL — one-line flavor, shown on cards
+  note: "…",              // OPTIONAL — one-line flavor, shown on cards
+  api: {fifa:"400021458", stage:"289273", espn:"760417"}, // OPTIONAL public live-data ids
+  watch: [{k:"fox", label:"FOX", detail:"English TV · OTA where local"}], // OPTIONAL watch badges
+  live: {status:"live", score:[1,0], minute:"38′", headline:"Live now"} // OPTIONAL runtime/embedded live state
 }
 ```
 

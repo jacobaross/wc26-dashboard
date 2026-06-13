@@ -39,6 +39,14 @@ Three things are date-pinned and need a touch each day:
 
 Also date-pinned, lower cadence: the Groups tab tag ("Live · Jun 12"), the Odds tab tag and footer line.
 
+## 2a. Live Mode, watch badges, and story photos
+
+- Live Mode renders from runtime public data plus optional `MATCHES[n].api`, `watch`, and `live` fields. Do **not** put in-progress scores in `s`; standings only consume verified final `s` scores.
+- The browser polls FIFA public match data every minute for today's API-enabled fixtures and uses timeline events for goal/card context. If the public feed fails, hide/leave Live Mode stale rather than inventing facts.
+- `watch` is display-only. Use text/logo-style badges such as `FOX`, `Tubi`, `Telemundo`, `Peacock`; do not hotlink official logos.
+- Storyline companion images live under `public/img/storylines/` as optimized local WebP assets. Avoid external image URLs so the single-file smoke check stays portable.
+- Mobile rules: one live game full width, two games side by side above 640px, stacked under 640px; badges wrap.
+
 ## 3. Updating odds
 
 `ODDS` array, top 12 only by design (board gets noisy beyond that):

@@ -12,6 +12,7 @@ Single-file, zero-dependency HTML dashboard for the 2026 FIFA World Cup (USA / C
 | `DESIGN.md` | Design system: tokens, typography, signature elements, and rules so future edits stay on-brand. |
 | `AGENT_BRIEF.md` | Suggested standing task definition for Hermes (update cadence, sources, approval boundaries, done-criteria). |
 | `HOSTING.md` | Live URL, hosting decisions, and Cloudflare/custom-domain migration notes. |
+| `LIVE_MODE_SPEC.md` | Live Mode, streaming badges, storyline imagery, and mobile upgrade spec. |
 
 ## Quick start
 
