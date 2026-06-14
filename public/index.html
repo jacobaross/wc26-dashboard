@@ -271,6 +271,8 @@ table.standings td.pts{font-family:'Anton';font-size:1.05rem;color:var(--gold)}
 table.standings tr.qpos td.tname{box-shadow:inset 3px 0 0 var(--gold)}
 table.standings tr.clickable{cursor:pointer;transition:background .15s}
 table.standings tr.clickable:hover{background:rgba(232,181,65,.07)}
+.tie-note{border-top:1px solid var(--line);padding:10px 16px 12px;color:var(--chalk-dim);font-size:.72rem;line-height:1.4}
+.tie-note b{color:var(--gold);letter-spacing:.08em;text-transform:uppercase;font-size:.66rem}
 .legend{margin-top:14px;font-size:.76rem;color:var(--chalk-dim)}
 .legend .key{display:inline-block;width:10px;height:10px;background:var(--gold);margin-right:6px;border-radius:2px;vertical-align:baseline}
 
@@ -519,7 +521,7 @@ footer{
       <span class="mark">FIELD OF <em>48</em></span>
       <span class="sub">World Cup 2026 · USA · Canada · Mexico</span>
     </a>
-    <span class="matchday-chip"><span class="live-dot"></span>Matchday 3 · Sat, June 13, 2026</span>
+    <span class="matchday-chip"><span class="live-dot"></span>Matchday 4 · Sun, June 14, 2026</span>
   </div>
   <nav class="tabs" role="tablist" aria-label="Dashboard sections">
     <button class="tab active" data-tab="today" role="tab" aria-selected="true">Today</button>
@@ -538,9 +540,9 @@ footer{
   <section class="panel active" id="panel-today" role="tabpanel">
     <div id="live-mode-root" aria-live="polite"></div>
     <div class="hero">
-      <span class="kicker">It's on · Day 3 of 39</span>
+      <span class="kicker">It's on · Day 4 of 39</span>
       <h1>The biggest <span class="accent">World Cup</span> ever is underway.</h1>
-      <p class="lede">The hosts are off and running: Mexico won at the Azteca, Canada split points in Toronto, and the USA thumped Paraguay 4–1 at SoFi. Today Brazil–Morocco headlines a three-match Saturday with Switzerland, Qatar, Haiti and Scotland joining the show.</p>
+      <p class="lede">Saturday gave the underdogs a pulse: Qatar stole its first World Cup point, Morocco held Brazil 1–1, and Scotland clipped Haiti 1–0. Today the D/E/F carousel starts with Australia–Türkiye, Germany–Curaçao, Netherlands–Japan, Ivory Coast–Ecuador and Sweden–Tunisia.</p>
       <div class="hero-stats">
         <div class="hstat"><div class="n">48</div><div class="l">Teams</div></div>
         <div class="hstat"><div class="n">104</div><div class="l">Matches</div></div>
@@ -549,10 +551,10 @@ footer{
       </div>
     </div>
 
-    <div class="sect"><h2>Today's Matches</h2><div class="rule"></div><span class="tag">Sat Jun 13</span></div>
+    <div class="sect"><h2>Today's Matches</h2><div class="rule"></div><span class="tag">Sun Jun 14</span></div>
     <div class="match-grid" id="today-matches"></div>
 
-    <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Through Jun 12</span></div>
+    <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Through Jun 13</span></div>
     <div class="match-grid" id="played-matches"></div>
 
     <div class="sect"><h2>Storylines To Watch</h2><div class="rule"></div></div>
@@ -568,8 +570,8 @@ footer{
 
   <!-- ================= GROUPS ================= -->
   <section class="panel" id="panel-groups" role="tabpanel">
-    <div class="sect"><h2>Group Standings</h2><div class="rule"></div><span class="tag">Live · Jun 13</span></div>
-    <p class="legend"><span class="key"></span>Top two in each group qualify for the Round of 32, joined by the eight best third-place teams. Click any team for the full profile.</p>
+    <div class="sect"><h2>Group Standings</h2><div class="rule"></div><span class="tag">Live · Jun 14</span></div>
+    <p class="legend"><span class="key"></span>Gold marks teams clear of the current top-two line; unresolved ties are flagged. Top two in each group qualify for the Round of 32, joined by the eight best third-place teams.</p>
     <div class="group-grid" id="groups-container" style="margin-top:16px"></div>
   </section>
 
@@ -706,7 +708,7 @@ footer{
 </div>
 
 <footer>
-  Field of 48 · Standings and results current as of Saturday, June 13, 2026 · Odds as of June 11–12 · Built for fun, refreshed by you
+  Field of 48 · Standings and results current as of Sunday, June 14, 2026 · Odds as of June 11–12 · Built for fun, refreshed by you
 </footer>
 
 <script>
@@ -719,14 +721,14 @@ const TEAMS = {
   "Czechia":{fl:"🇨🇿",g:"A",star:"Patrik Schick · striker",hist:"First World Cup as Czechia since 2006",odds:null,blurb:"Winners of UEFA playoff D, the Czechs are at their first World Cup in two decades. A late collapse against South Korea stung, but Patrik Schick's goal threat keeps them dangerous against South Africa and Mexico."},
   // Group B
   "Canada":{fl:"🇨🇦",g:"B",star:"Alphonso Davies · world-class wing-back",hist:"3rd appearance · co-host",odds:null,blurb:"Jesse Marsch's Canada opened at home with a 1–1 draw against Bosnia, still chasing the nation's first-ever World Cup win. Alphonso Davies and Jonathan David headline the most talented squad in Canadian history."},
-  "Switzerland":{fl:"🇨🇭",g:"B",star:"Granit Xhaka · midfield general",hist:"13th appearance · serial Round-of-16ers",odds:null,blurb:"The Swiss have reached the knockouts at five straight major tournaments and are quietly the team nobody wants to face. Granit Xhaka's leadership and a deep, organized squad make them favorites in Group B."},
-  "Qatar":{fl:"🇶🇦",g:"B",star:"Akram Afif · Asian Player of the Year",hist:"2nd appearance · 2022 hosts",odds:null,blurb:"The 2022 hosts qualified on merit this time. Akram Afif is one of Asia's most gifted attackers, and Qatar arrives with something to prove after going winless on home soil four years ago."},
+  "Switzerland":{fl:"🇨🇭",g:"B",star:"Granit Xhaka · midfield general",hist:"13th appearance · serial Round-of-16ers",odds:null,blurb:"The Swiss have reached the knockouts at five straight major tournaments and are quietly the team nobody wants to face. But conceding a 90+4' own goal against Qatar turned the opener into two dropped points, so Bosnia and Canada now matter fast."},
+  "Qatar":{fl:"🇶🇦",g:"B",star:"Akram Afif · Asian Player of the Year",hist:"2nd appearance · 2022 hosts",odds:null,blurb:"The 2022 hosts qualified on merit this time and have already bettered that home-tournament pain: a late Swiss own goal gave Qatar its first-ever World Cup point. Akram Afif is one of Asia's most gifted attackers, and now the group has a pulse."},
   "Bosnia and Herzegovina":{fl:"🇧🇦",g:"B",star:"Edin Džeko · ageless at 40",hist:"2nd appearance · first since 2014",odds:null,blurb:"The Dragons won UEFA playoff A to reach their second-ever World Cup. Edin Džeko, still scoring at 40, leads an emotional return, and the opening draw in Toronto gives Bosnia a foothold in Group B."},
   // Group C
-  "Brazil":{fl:"🇧🇷",g:"C",star:"Vinícius Júnior · the headline act",hist:"23rd appearance · record 5 titles",odds:"+950",blurb:"The only nation to play in every World Cup, now coached by Carlo Ancelotti. Vinícius Jr and Raphinha give the Seleção the most feared attack in the field — but Brazil hasn't lifted the trophy since 2002, an eternity by their standards."},
-  "Morocco":{fl:"🇲🇦",g:"C",star:"Achraf Hakimi · PSG superstar",hist:"7th appearance · historic SF in 2022",odds:null,blurb:"The Atlas Lions became the first African semifinalists in history in 2022, and this squad is arguably stronger. Hakimi and Brahim Díaz lead a side that fears absolutely no one — including Brazil, who they face on June 13."},
-  "Haiti":{fl:"🇭🇹",g:"C",star:"Duckens Nazon · veteran striker",hist:"2nd appearance · first since 1974",odds:null,blurb:"One of the tournament's great stories: Haiti qualified for its first World Cup in 52 years despite being unable to play home matches in Port-au-Prince. Every minute they play in this tournament is found money."},
-  "Scotland":{fl:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",g:"C",star:"Scott McTominay · Napoli hero",hist:"9th appearance · first since 1998",odds:null,blurb:"The Tartan Army ends a 28-year wait. McTominay arrives off the back of a Serie A title run, Andy Robertson brings Champions League pedigree, and Scotland's traveling support may be the tournament's loudest."},
+  "Brazil":{fl:"🇧🇷",g:"C",star:"Vinícius Júnior · the headline act",hist:"23rd appearance · record 5 titles",odds:"+950",blurb:"The only nation to play in every World Cup, now coached by Carlo Ancelotti. The opener was a warning flare: Vinícius Jr rescued a 1–1 draw after Morocco landed the first punch. Brazil still has the most feared attack in the field, but the trophy drought since 2002 is loud."},
+  "Morocco":{fl:"🇲🇦",g:"C",star:"Achraf Hakimi · PSG superstar",hist:"7th appearance · historic SF in 2022",odds:null,blurb:"The Atlas Lions became the first African semifinalists in history in 2022, and this squad is arguably stronger. Ismael Saibari's opener against Brazil showed exactly why this side fears no one, even after Vinícius Jr pulled the favorite level."},
+  "Haiti":{fl:"🇭🇹",g:"C",star:"Duckens Nazon · veteran striker",hist:"2nd appearance · first since 1974",odds:null,blurb:"One of the tournament's great stories: Haiti qualified for its first World Cup in 52 years despite being unable to play home matches in Port-au-Prince. A narrow 1–0 opening loss to Scotland stings, but every minute they play in this tournament is found money."},
+  "Scotland":{fl:"\u{1F3F4}\u{E0067}\u{E0062}\u{E0073}\u{E0063}\u{E0074}\u{E007F}",g:"C",star:"Scott McTominay · Napoli hero",hist:"9th appearance · first since 1998",odds:null,blurb:"The Tartan Army ended a 28-year wait with a 1–0 win over Haiti, John McGinn supplying the opener and the traveling wall of noise doing the rest. McTominay, Robertson and company now have real room to chase a first knockout place."},
   // Group D
   "United States":{fl:"🇺🇸",g:"D",star:"Christian Pulisic · Captain America",hist:"12th appearance · best: 3rd in 1930",odds:"≈25–1 · +138 to win Group D",blurb:"Mauricio Pochettino's hosts opened at SoFi with a 4–1 roar over Paraguay: Balogun bagged a brace, Gio Reyna added the exclamation point, and the USA seized early control of Group D. The home crowd, the friendly group, the protected bracket — there has never been a better setup for a deep American run."},
   "Paraguay":{fl:"🇵🇾",g:"D",star:"Julio Enciso · creative spark",hist:"9th appearance · first since 2010",odds:null,blurb:"La Albirroja returns after 16 years away, built on the meanest defense in South American qualifying. The 4–1 opening loss to the USA turns Australia and Türkiye into pressure games fast."},
@@ -796,9 +798,9 @@ const MATCHES = [
   {d:"Jun 11",g:"A",h:"South Korea",a:"Czechia",s:[2,1],v:"Estadio Akron, Guadalajara",note:"Korea rallied from a goal down"},
   {d:"Jun 12",g:"B",h:"Canada",a:"Bosnia and Herzegovina",s:[1,1],api:{fifa:"400021449",stage:"289273",espn:"760416"},v:"BMO Field, Toronto",note:"Larin rescued Canada's first home WC point",watch:[{k:"fox",label:"FOX",detail:"English TV · OTA where local"},{k:"telemundo",label:"Telemundo",detail:"Spanish TV · OTA where local"},{k:"peacock",label:"Peacock",detail:"Spanish stream"}]},
   {d:"Jun 12",g:"D",h:"United States",a:"Paraguay",s:[4,1],api:{fifa:"400021458",stage:"289273",espn:"760417"},v:"SoFi Stadium, Inglewood",note:"Balogun brace, Reyna dagger at 90+8",watch:[{k:"fox",label:"FOX",detail:"English TV · OTA where local"},{k:"tubi",label:"Tubi",detail:"Free stream",free:true},{k:"telemundo",label:"Telemundo",detail:"Spanish TV · OTA where local"},{k:"peacock",label:"Peacock",detail:"Spanish stream"}]},
-  {d:"Jun 13",g:"B",h:"Qatar",a:"Switzerland",v:"San Francisco Bay Area"},
-  {d:"Jun 13",g:"C",h:"Brazil",a:"Morocco",v:"Lincoln Financial Field, Philadelphia",note:"Heavyweight clash of MD1"},
-  {d:"Jun 13",g:"C",h:"Haiti",a:"Scotland",v:"Gillette Stadium, Foxborough"},
+  {d:"Jun 13",g:"B",h:"Qatar",a:"Switzerland",s:[1,1],v:"San Francisco Bay Area",note:"Muheim own goal gave Qatar first WC point"},
+  {d:"Jun 13",g:"C",h:"Brazil",a:"Morocco",s:[1,1],v:"Lincoln Financial Field, Philadelphia",note:"Vinícius answered Saibari's opener"},
+  {d:"Jun 13",g:"C",h:"Haiti",a:"Scotland",s:[0,1],v:"Gillette Stadium, Foxborough",note:"McGinn's 28th-minute strike decided it"},
   {d:"Jun 14",g:"D",h:"Australia",a:"Türkiye",v:"BC Place, Vancouver"},
   {d:"Jun 14",g:"E",h:"Germany",a:"Curaçao",v:"NRG Stadium, Houston",note:"Smallest WC nation ever debuts"},
   {d:"Jun 14",g:"F",h:"Netherlands",a:"Japan",v:"AT&T Stadium, Dallas"},
@@ -1209,7 +1211,7 @@ const ODDS = [
 /* ================= HELPERS ================= */
 const esc = s => String(s ?? '').replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const fl = t => TEAMS[t] ? TEAMS[t].fl : "🏳️";
-const TODAY_DATE = "Jun 13";
+const TODAY_DATE = "Jun 14";
 const FIFA_COMPETITION_ID = "17";
 const FIFA_SEASON_ID = "285023";
 const DATA_ENDPOINTS = {
@@ -1235,6 +1237,7 @@ function computeStandings(group){
   return Object.values(table).sort((a,b)=>
     b.pts-a.pts || (b.gf-b.ga)-(a.gf-a.ga) || b.gf-a.gf || a.team.localeCompare(b.team));
 }
+function sameStandingCore(a,b){return a&&b&&a.pts===b.pts&&(a.gf-a.ga)===(b.gf-b.ga)&&a.gf===b.gf}
 
 /* ================= RENDER: matches + live mode ================= */
 function watchRow(m){
@@ -1506,7 +1509,7 @@ function updateMatchdayChip(showing){
   const chip = document.querySelector('.matchday-chip');
   const liveNow = showing.some(m=>m.live && m.live.status==='live');
   const finalNow = showing.length && showing.every(m=>m.live && m.live.status==='ft');
-  const text = liveNow ? 'LIVE · Matchday 3' : finalNow ? 'Full time · Matchday 3' : 'Matchday 3 · Sat, June 13, 2026';
+  const text = liveNow ? 'LIVE · Matchday 4' : finalNow ? 'Full time · Matchday 4' : 'Matchday 4 · Sun, June 14, 2026';
   chip.innerHTML = `<span class="live-dot"></span>${esc(text)}`;
 }
 function renderLiveMode(){
@@ -1536,18 +1539,22 @@ window.addEventListener('beforeunload',()=>setLivePolling(false));
 const groupHints = {A:"Hosts Mexico",B:"Hosts Canada",C:"Brazil & Morocco",D:"Hosts USA",E:"Germany",F:"Group of sneaky death",G:"Belgium & Salah",H:"The favorites",I:"France & Haaland",J:"The champions",K:"Ronaldo's farewell",L:"England"};
 function renderGroups(){
   document.getElementById('groups-container').innerHTML = GROUPS.map(g=>{
-    const rows = computeStandings(g).map((r,i)=>`
-      <tr class="clickable ${i<2?'qpos':''}" data-team="${esc(r.team)}" tabindex="0" role="button" aria-label="Open ${esc(r.team)} profile">
+    const rows = computeStandings(g);
+    const boundaryTie = rows.some(r=>r.p>0) && sameStandingCore(rows[1],rows[2]);
+    const body = rows.map((r,i)=>`
+      <tr class="clickable ${i<2&&!sameStandingCore(r,rows[2])?'qpos':''}" data-team="${esc(r.team)}" tabindex="0" role="button" aria-label="Open ${esc(r.team)} profile">
         <td class="tname"><span class="fl">${fl(r.team)}</span>${esc(r.team)}</td>
         <td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td>
         <td>${r.gf-r.ga>0?'+':''}${r.gf-r.ga}</td><td class="pts">${r.pts}</td>
       </tr>`).join('');
+    const tieNote = boundaryTie ? '<p class="tie-note"><b>Line unresolved:</b> teams are level on points, goal difference and goals scored; FIFA tiebreakers are not shown yet.</p>' : '';
     return `<div class="gcard">
       <header><span class="gname">Group <span>${g}</span></span><span class="ghint">${groupHints[g]}</span></header>
       <table class="standings">
         <thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr></thead>
-        <tbody>${rows}</tbody>
+        <tbody>${body}</tbody>
       </table>
+      ${tieNote}
     </div>`;
   }).join('');
 }
