@@ -521,7 +521,7 @@ footer{
       <span class="mark">FIELD OF <em>48</em></span>
       <span class="sub">World Cup 2026 · USA · Canada · Mexico</span>
     </a>
-    <span class="matchday-chip"><span class="live-dot"></span>Matchday 5 · Mon, June 15, 2026</span>
+    <span class="matchday-chip"><span class="live-dot"></span>Matchday 6 · Tue, June 16, 2026</span>
   </div>
   <nav class="tabs" role="tablist" aria-label="Dashboard sections">
     <button class="tab active" data-tab="today" role="tab" aria-selected="true">Today</button>
@@ -540,9 +540,9 @@ footer{
   <section class="panel active" id="panel-today" role="tabpanel">
     <div id="live-mode-root" aria-live="polite"></div>
     <div class="hero">
-      <span class="kicker">It's on · Day 5 of 39</span>
+      <span class="kicker">It's on · Day 6 of 39</span>
       <h1>The biggest <span class="accent">World Cup</span> ever is underway.</h1>
-      <p class="lede">Sunday blew the board open: Australia blanked Türkiye 2–0, Germany thumped Curaçao 7–1, Japan and the Netherlands split a 2–2 thriller, Ivory Coast edged Ecuador and Sweden rolled Tunisia 5–1. Today Group G/H takes over with Spain–Cape Verde, Belgium–Egypt, Saudi Arabia–Uruguay and Iran–New Zealand.</p>
+      <p class="lede">Monday went all draws: Spain and Cape Verde finished 0–0, Belgium–Egypt and Saudi Arabia–Uruguay ended 1–1, and Iran–New Zealand served up a 2–2 closer. Today Group I/J takes over with France–Senegal, Iraq–Norway and Argentina–Algeria.</p>
       <div class="hero-stats">
         <div class="hstat"><div class="n">48</div><div class="l">Teams</div></div>
         <div class="hstat"><div class="n">104</div><div class="l">Matches</div></div>
@@ -551,10 +551,10 @@ footer{
       </div>
     </div>
 
-    <div class="sect"><h2>Today's Matches</h2><div class="rule"></div><span class="tag">Mon Jun 15</span></div>
+    <div class="sect"><h2>Today's Matches</h2><div class="rule"></div><span class="tag">Tue Jun 16</span></div>
     <div class="match-grid" id="today-matches"></div>
 
-    <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Through Jun 14</span></div>
+    <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Through Jun 15</span></div>
     <div class="match-grid" id="played-matches"></div>
 
     <div class="sect"><h2>Storylines To Watch</h2><div class="rule"></div></div>
@@ -570,7 +570,7 @@ footer{
 
   <!-- ================= GROUPS ================= -->
   <section class="panel" id="panel-groups" role="tabpanel">
-    <div class="sect"><h2>Group Standings</h2><div class="rule"></div><span class="tag">Live · Jun 15</span></div>
+    <div class="sect"><h2>Group Standings</h2><div class="rule"></div><span class="tag">Live · Jun 16</span></div>
     <p class="legend"><span class="key"></span>Gold marks teams clear of the current top-two line; unresolved ties are flagged. Top two in each group qualify for the Round of 32, joined by the eight best third-place teams.</p>
     <div class="group-grid" id="groups-container" style="margin-top:16px"></div>
   </section>
@@ -708,7 +708,7 @@ footer{
 </div>
 
 <footer>
-  Field of 48 · Standings and results current as of Monday, June 15, 2026 · Odds as of June 11–12 · Built for fun, refreshed by you
+  Field of 48 · Standings and results current as of Tuesday, June 16, 2026 · Odds as of June 11–12 · Built for fun, refreshed by you
 </footer>
 
 <script>
@@ -806,10 +806,10 @@ const MATCHES = [
   {d:"Jun 14",g:"F",h:"Netherlands",a:"Japan",s:[2,2],v:"AT&T Stadium, Dallas",note:"Japan and Netherlands split a 2–2 thriller"},
   {d:"Jun 14",g:"E",h:"Ivory Coast",a:"Ecuador",s:[1,0],v:"Arrowhead Stadium, Kansas City",note:"Ivory Coast opened with a clean sheet"},
   {d:"Jun 14",g:"F",h:"Sweden",a:"Tunisia",s:[5,1],v:"Estadio BBVA, Monterrey",note:"Sweden rolled to Group F's early lead"},
-  {d:"Jun 15",g:"H",h:"Spain",a:"Cape Verde",t:"12:00 PM ET",api:{fifa:"400021482",stage:"289273",espn:"760428"},v:"Mercedes-Benz Stadium, Atlanta",note:"The favorites begin"},
-  {d:"Jun 15",g:"G",h:"Belgium",a:"Egypt",t:"3:00 PM ET",api:{fifa:"400021478",stage:"289273",espn:"760426"},v:"Lumen Field, Seattle"},
-  {d:"Jun 15",g:"H",h:"Saudi Arabia",a:"Uruguay",t:"6:00 PM ET",api:{fifa:"400021486",stage:"289273",espn:"760429"},v:"Hard Rock Stadium, Miami"},
-  {d:"Jun 15",g:"G",h:"Iran",a:"New Zealand",t:"9:00 PM ET",api:{fifa:"400021476",stage:"289273",espn:"760427"},v:"SoFi Stadium, Inglewood"},
+  {d:"Jun 15",g:"H",h:"Spain",a:"Cape Verde",s:[0,0],api:{fifa:"400021482",stage:"289273",espn:"760428"},v:"Mercedes-Benz Stadium, Atlanta",note:"Cape Verde held the favorites scoreless"},
+  {d:"Jun 15",g:"G",h:"Belgium",a:"Egypt",s:[1,1],api:{fifa:"400021478",stage:"289273",espn:"760426"},v:"Lumen Field, Seattle",note:"Belgium and Egypt split the points"},
+  {d:"Jun 15",g:"H",h:"Saudi Arabia",a:"Uruguay",s:[1,1],api:{fifa:"400021486",stage:"289273",espn:"760429"},v:"Hard Rock Stadium, Miami",note:"Saudi Arabia held Uruguay in Miami"},
+  {d:"Jun 15",g:"G",h:"Iran",a:"New Zealand",s:[2,2],api:{fifa:"400021476",stage:"289273",espn:"760427"},v:"SoFi Stadium, Inglewood",note:"Group G closed with a four-goal draw"},
   {d:"Jun 16",g:"I",h:"France",a:"Senegal",v:"MetLife Stadium, East Rutherford"},
   {d:"Jun 16",g:"I",h:"Iraq",a:"Norway",v:"Gillette Stadium, Foxborough",note:"Haaland's World Cup debut"},
   {d:"Jun 16",g:"J",h:"Argentina",a:"Algeria",v:"Arrowhead Stadium, Kansas City",note:"The champions begin their defense"},
@@ -1211,7 +1211,7 @@ const ODDS = [
 /* ================= HELPERS ================= */
 const esc = s => String(s ?? '').replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const fl = t => TEAMS[t] ? TEAMS[t].fl : "🏳️";
-const TODAY_DATE = "Jun 15";
+const TODAY_DATE = "Jun 16";
 const FIFA_COMPETITION_ID = "17";
 const FIFA_SEASON_ID = "285023";
 const DATA_ENDPOINTS = {
@@ -1509,7 +1509,7 @@ function updateMatchdayChip(showing){
   const chip = document.querySelector('.matchday-chip');
   const liveNow = showing.some(m=>m.live && m.live.status==='live');
   const finalNow = showing.length && showing.every(m=>m.live && m.live.status==='ft');
-  const text = liveNow ? 'LIVE · Matchday 4' : finalNow ? 'Full time · Matchday 4' : 'Matchday 4 · Sun, June 14, 2026';
+  const text = liveNow ? 'LIVE · Matchday 6' : finalNow ? 'Full time · Matchday 6' : 'Matchday 6 · Tue, June 16, 2026';
   chip.innerHTML = `<span class="live-dot"></span>${esc(text)}`;
 }
 function renderLiveMode(){
