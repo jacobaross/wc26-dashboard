@@ -521,7 +521,7 @@ footer{
       <span class="mark">FIELD OF <em>48</em></span>
       <span class="sub">World Cup 2026 · USA · Canada · Mexico</span>
     </a>
-    <span class="matchday-chip"><span class="live-dot"></span>Matchday 7 · Wed, June 17, 2026</span>
+    <span class="matchday-chip"><span class="live-dot"></span>Matchday 8 · Thu, June 18, 2026</span>
   </div>
   <nav class="tabs" role="tablist" aria-label="Dashboard sections">
     <button class="tab active" data-tab="today" role="tab" aria-selected="true">Today</button>
@@ -540,9 +540,9 @@ footer{
   <section class="panel active" id="panel-today" role="tabpanel">
     <div id="live-mode-root" aria-live="polite"></div>
     <div class="hero">
-      <span class="kicker">It's on · Day 7 of 39</span>
+      <span class="kicker">It's on · Day 8 of 39</span>
       <h1>The biggest <span class="accent">World Cup</span> ever is underway.</h1>
-      <p class="lede">Tuesday brought Mbappé and Haaland braces, plus Argentina opening its title defense with a 3–0 win over Algeria. Today Groups J/K/L roll in with Austria–Jordan, Portugal–DR Congo, England–Croatia, Ghana–Panama and Uzbekistan–Colombia.</p>
+      <p class="lede">Wednesday gave England a 4–2 statement over Croatia, Colombia a 3–1 debut-spoiler against Uzbekistan, and DR Congo a 1–1 point against Portugal. Today Group A/B take over: Czechia–South Africa, Switzerland–Bosnia, Canada–Qatar and Mexico–South Korea.</p>
       <div class="hero-stats">
         <div class="hstat"><div class="n">48</div><div class="l">Teams</div></div>
         <div class="hstat"><div class="n">104</div><div class="l">Matches</div></div>
@@ -551,10 +551,10 @@ footer{
       </div>
     </div>
 
-    <div class="sect"><h2>Today's Matches</h2><div class="rule"></div><span class="tag">Wed Jun 17</span></div>
+    <div class="sect"><h2>Today's Matches</h2><div class="rule"></div><span class="tag">Thu Jun 18</span></div>
     <div class="match-grid" id="today-matches"></div>
 
-    <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Through Jun 16</span></div>
+    <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Through Jun 17</span></div>
     <div class="match-grid" id="played-matches"></div>
 
     <div class="sect"><h2>Storylines To Watch</h2><div class="rule"></div></div>
@@ -570,7 +570,7 @@ footer{
 
   <!-- ================= GROUPS ================= -->
   <section class="panel" id="panel-groups" role="tabpanel">
-    <div class="sect"><h2>Group Standings</h2><div class="rule"></div><span class="tag">Live · Jun 17</span></div>
+    <div class="sect"><h2>Group Standings</h2><div class="rule"></div><span class="tag">Live · Jun 18</span></div>
     <p class="legend"><span class="key"></span>Gold marks teams clear of the current top-two line; unresolved ties are flagged. Top two in each group qualify for the Round of 32, joined by the eight best third-place teams.</p>
     <div class="group-grid" id="groups-container" style="margin-top:16px"></div>
   </section>
@@ -708,7 +708,7 @@ footer{
 </div>
 
 <footer>
-  Field of 48 · Standings and results current as of Wednesday, June 17, 2026 · Odds as of June 11–12 · Built for fun, refreshed by you
+  Field of 48 · Standings and results current as of Thursday, June 18, 2026 · Odds as of June 11–12 · Built for fun, refreshed by you
 </footer>
 
 <script>
@@ -813,11 +813,11 @@ const MATCHES = [
   {d:"Jun 16",g:"I",h:"France",a:"Senegal",s:[3,1],v:"MetLife Stadium, East Rutherford",note:"Mbappé brace made him France's top scorer"},
   {d:"Jun 16",g:"I",h:"Iraq",a:"Norway",s:[1,4],v:"Gillette Stadium, Foxborough",note:"Haaland brace in Norway's World Cup return"},
   {d:"Jun 16",g:"J",h:"Argentina",a:"Algeria",s:[3,0],v:"Arrowhead Stadium, Kansas City",note:"Defending champions opened with a clean sheet"},
-  {d:"Jun 17",g:"J",h:"Austria",a:"Jordan",v:"Levi's Stadium, Santa Clara"},
-  {d:"Jun 17",g:"K",h:"Portugal",a:"DR Congo",v:"NRG Stadium, Houston",note:"Ronaldo's record 6th World Cup"},
-  {d:"Jun 17",g:"L",h:"England",a:"Croatia",v:"AT&T Stadium, Arlington",note:"2018 semifinal rematch"},
-  {d:"Jun 17",g:"L",h:"Ghana",a:"Panama",v:"BMO Field, Toronto"},
-  {d:"Jun 17",g:"K",h:"Uzbekistan",a:"Colombia",v:"Estadio Azteca, Mexico City"},
+  {d:"Jun 17",g:"J",h:"Austria",a:"Jordan",s:[3,1],v:"Levi's Stadium, Santa Clara",note:"Austria won in Jordan's World Cup debut"},
+  {d:"Jun 17",g:"K",h:"Portugal",a:"DR Congo",s:[1,1],v:"NRG Stadium, Houston",note:"DR Congo held Portugal to a draw"},
+  {d:"Jun 17",g:"L",h:"England",a:"Croatia",s:[4,2],v:"AT&T Stadium, Arlington",note:"England took the six-goal rematch"},
+  {d:"Jun 17",g:"L",h:"Ghana",a:"Panama",s:[1,0],v:"BMO Field, Toronto",note:"Ghana edged Panama in Toronto"},
+  {d:"Jun 17",g:"K",h:"Uzbekistan",a:"Colombia",s:[1,3],v:"Estadio Azteca, Mexico City",note:"Colombia spoiled Uzbekistan's debut"},
   // Matchday 2
   {d:"Jun 18",g:"A",h:"Czechia",a:"South Africa",v:"Atlanta"},
   {d:"Jun 18",g:"B",h:"Switzerland",a:"Bosnia and Herzegovina",v:"Inglewood"},
@@ -1211,7 +1211,7 @@ const ODDS = [
 /* ================= HELPERS ================= */
 const esc = s => String(s ?? '').replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const fl = t => TEAMS[t] ? TEAMS[t].fl : "🏳️";
-const TODAY_DATE = "Jun 17";
+const TODAY_DATE = "Jun 18";
 const FIFA_COMPETITION_ID = "17";
 const FIFA_SEASON_ID = "285023";
 const DATA_ENDPOINTS = {
