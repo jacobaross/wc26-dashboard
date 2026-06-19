@@ -108,10 +108,10 @@ if (snapshot) {
     if (idx > 0) assert(o.ip <= odds[idx - 1].ip, `Odds row ${idx + 1} is out of descending probability order.`);
   }
   const expectedA = [
-    ['Mexico', 3, 2],
-    ['South Korea', 3, 1],
-    ['Czechia', 0, -1],
-    ['South Africa', 0, -2]
+    ['Mexico', 6, 3],
+    ['South Korea', 3, 0],
+    ['Czechia', 1, -1],
+    ['South Africa', 1, -2]
   ];
   for (let i = 0; i < expectedA.length; i++) {
     const [team, pts, gd] = expectedA[i];

@@ -521,7 +521,7 @@ footer{
       <span class="mark">FIELD OF <em>48</em></span>
       <span class="sub">World Cup 2026 · USA · Canada · Mexico</span>
     </a>
-    <span class="matchday-chip"><span class="live-dot"></span>Matchday 8 · Thu, June 18, 2026</span>
+    <span class="matchday-chip"><span class="live-dot"></span>Matchday 9 · Fri, June 19, 2026</span>
   </div>
   <nav class="tabs" role="tablist" aria-label="Dashboard sections">
     <button class="tab active" data-tab="today" role="tab" aria-selected="true">Today</button>
@@ -540,9 +540,9 @@ footer{
   <section class="panel active" id="panel-today" role="tabpanel">
     <div id="live-mode-root" aria-live="polite"></div>
     <div class="hero">
-      <span class="kicker">It's on · Day 8 of 39</span>
+      <span class="kicker">It's on · Day 9 of 39</span>
       <h1>The biggest <span class="accent">World Cup</span> ever is underway.</h1>
-      <p class="lede">Wednesday gave England a 4–2 statement over Croatia, Colombia a 3–1 debut-spoiler against Uzbekistan, and DR Congo a 1–1 point against Portugal. Today Group A/B take over: Czechia–South Africa, Switzerland–Bosnia, Canada–Qatar and Mexico–South Korea.</p>
+      <p class="lede">Thursday delivered Canada's first men's World Cup win, a 6–0 roar over Qatar, Switzerland's late 4–1 surge, and Mexico's R32-clinching 1–0 over South Korea. Today Groups C/D take over: USA–Australia, Scotland–Morocco, Brazil–Haiti and Türkiye–Paraguay.</p>
       <div class="hero-stats">
         <div class="hstat"><div class="n">48</div><div class="l">Teams</div></div>
         <div class="hstat"><div class="n">104</div><div class="l">Matches</div></div>
@@ -551,16 +551,16 @@ footer{
       </div>
     </div>
 
-    <div class="sect"><h2>Today's Matches</h2><div class="rule"></div><span class="tag">Thu Jun 18</span></div>
+    <div class="sect"><h2>Today's Matches</h2><div class="rule"></div><span class="tag">Fri Jun 19</span></div>
     <div class="match-grid" id="today-matches"></div>
 
-    <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Through Jun 17</span></div>
+    <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Through Jun 18</span></div>
     <div class="match-grid" id="played-matches"></div>
 
     <div class="sect"><h2>Storylines To Watch</h2><div class="rule"></div></div>
     <div class="story-grid">
       <div class="story has-photo"><figure class="story-photo"><img src="img/storylines/last-dances.webp" alt="Two veteran football captains walking toward a floodlit pitch" loading="lazy" decoding="async"></figure><h3>🐐 The last dances</h3><p>Lionel Messi (Argentina) and Cristiano Ronaldo (Portugal) are both in their sixth — and almost certainly final — World Cup. If both win their groups, the bracket points toward a fairytale quarterfinal collision.</p></div>
-      <div class="story alt has-photo"><figure class="story-photo"><img src="img/storylines/hosts.webp" alt="A packed North American soccer stadium at night" loading="lazy" decoding="async"></figure><h3>🏠 Three hosts, three dreams</h3><p>Mexico delivered at the Azteca, Canada earned a home point, and the USA announced itself 4–1 at SoFi under Mauricio Pochettino. No host nation has lifted the trophy since France in 1998.</p></div>
+      <div class="story alt has-photo"><figure class="story-photo"><img src="img/storylines/hosts.webp" alt="A packed North American soccer stadium at night" loading="lazy" decoding="async"></figure><h3>🏠 Three hosts, three dreams</h3><p>Mexico is already through after a 1–0 grind over South Korea, Canada got its first men's World Cup win in a 6–0 rout, and the USA announced itself 4–1 at SoFi under Mauricio Pochettino. No host nation has lifted the trophy since France in 1998.</p></div>
       <div class="story has-photo"><figure class="story-photo"><img src="img/storylines/spain.webp" alt="A young winger dribbling under stadium lights" loading="lazy" decoding="async"></figure><h3>⚡ Spain's golden floor</h3><p>The Euro 2024 champions enter as betting favorites. Lamine Yamal, still a teenager, may be the most electric player on the planet — and Pedri runs the most fluent midfield in the field.</p></div>
       <div class="story alt has-photo"><figure class="story-photo"><img src="img/storylines/red-card.webp" alt="A referee holding a red card during a night match" loading="lazy" decoding="async"></figure><h3>🟥 A record-breaking opener</h3><p>Mexico's 2–0 win over South Africa featured three red cards — the most ever in a single World Cup match. The expanded tournament wasted no time making history.</p></div>
       <div class="story has-photo"><figure class="story-photo"><img src="img/storylines/norway.webp" alt="A powerful striker celebrating under cold stadium lights" loading="lazy" decoding="async"></figure><h3>🇳🇴 Haaland, finally</h3><p>Norway is at its first World Cup since 1998, and Erling Haaland arrives as maybe the best pure striker alive. At 30–1, the Norwegians are the bookmakers' favorite dark horse.</p></div>
@@ -570,7 +570,7 @@ footer{
 
   <!-- ================= GROUPS ================= -->
   <section class="panel" id="panel-groups" role="tabpanel">
-    <div class="sect"><h2>Group Standings</h2><div class="rule"></div><span class="tag">Live · Jun 18</span></div>
+    <div class="sect"><h2>Group Standings</h2><div class="rule"></div><span class="tag">Live · Jun 19</span></div>
     <p class="legend"><span class="key"></span>Gold marks teams clear of the current top-two line; unresolved ties are flagged. Top two in each group qualify for the Round of 32, joined by the eight best third-place teams.</p>
     <div class="group-grid" id="groups-container" style="margin-top:16px"></div>
   </section>
@@ -715,15 +715,15 @@ footer{
 /* ================= DATA ================= */
 const TEAMS = {
   // Group A
-  "Mexico":{fl:"🇲🇽",g:"A",star:"Gilberto Mora · 17-year-old phenom",hist:"18th appearance · QF twice",odds:null,blurb:"The hosts opened the tournament with a 2–0 statement at the Azteca — a match that produced a record three red cards. Veteran keeper Guillermo Ochoa is at his fifth World Cup, while teenager Gilberto Mora carries the new generation's hopes. El Tri has never passed the quarterfinals; doing it at home would be immortality."},
-  "South Africa":{fl:"🇿🇦",g:"A",star:"Relebohile Mofokeng · winger",hist:"4th appearance · first since hosting 2010",odds:null,blurb:"Bafana Bafana are back at the World Cup for the first time since hosting in 2010 — and drew Mexico in the opener, just like that year. The opening loss leaves them needing results against Czechia and South Korea to keep the dream alive."},
-  "South Korea":{fl:"🇰🇷",g:"A",star:"Son Heung-min · captain & talisman",hist:"11th straight appearance · SF in 2002",odds:null,blurb:"The Taeguk Warriors fell behind against Czechia and roared back to win 2–1, with Son Heung-min — likely at his final World Cup — pulling the strings. Korea has qualified for eleven consecutive tournaments, a streak only the giants can match."},
-  "Czechia":{fl:"🇨🇿",g:"A",star:"Patrik Schick · striker",hist:"First World Cup as Czechia since 2006",odds:null,blurb:"Winners of UEFA playoff D, the Czechs are at their first World Cup in two decades. A late collapse against South Korea stung, but Patrik Schick's goal threat keeps them dangerous against South Africa and Mexico."},
+  "Mexico":{fl:"🇲🇽",g:"A",star:"Gilberto Mora · 17-year-old phenom",hist:"18th appearance · QF twice",odds:null,blurb:"The hosts are already into the Round of 32: a 2–0 opener at the Azteca and Luis Romo's 1–0 winner over South Korea gave El Tri six points from six. Veteran keeper Guillermo Ochoa is at his fifth World Cup, while teenager Gilberto Mora carries the new generation's hopes. El Tri has never passed the quarterfinals; doing it at home would be immortality."},
+  "South Africa":{fl:"🇿🇦",g:"A",star:"Relebohile Mofokeng · winger",hist:"4th appearance · first since hosting 2010",odds:null,blurb:"Bafana Bafana are back at the World Cup for the first time since hosting in 2010. After opening with a 2–0 loss to Mexico, Teboho Mokoena's late penalty against Czechia gave them a first point and keeps the South Korea finale alive."},
+  "South Korea":{fl:"🇰🇷",g:"A",star:"Son Heung-min · captain & talisman",hist:"11th straight appearance · SF in 2002",odds:null,blurb:"The Taeguk Warriors fell behind against Czechia and roared back to win 2–1, then got edged 1–0 by Mexico in Guadalajara. Son Heung-min — likely at his final World Cup — still gives Korea a puncher's chance, but South Africa now becomes a pressure game."},
+  "Czechia":{fl:"🇨🇿",g:"A",star:"Patrik Schick · striker",hist:"First World Cup as Czechia since 2006",odds:null,blurb:"Winners of UEFA playoff D, the Czechs are at their first World Cup in two decades. A late collapse against South Korea stung, and South Africa's 83rd-minute penalty denied them a first win. Patrik Schick's goal threat keeps them alive, but Mexico is now a must-have result."},
   // Group B
-  "Canada":{fl:"🇨🇦",g:"B",star:"Alphonso Davies · world-class wing-back",hist:"3rd appearance · co-host",odds:null,blurb:"Jesse Marsch's Canada opened at home with a 1–1 draw against Bosnia, still chasing the nation's first-ever World Cup win. Alphonso Davies and Jonathan David headline the most talented squad in Canadian history."},
-  "Switzerland":{fl:"🇨🇭",g:"B",star:"Granit Xhaka · midfield general",hist:"13th appearance · serial Round-of-16ers",odds:null,blurb:"The Swiss have reached the knockouts at five straight major tournaments and are quietly the team nobody wants to face. But conceding a 90+4' own goal against Qatar turned the opener into two dropped points, so Bosnia and Canada now matter fast."},
-  "Qatar":{fl:"🇶🇦",g:"B",star:"Akram Afif · Asian Player of the Year",hist:"2nd appearance · 2022 hosts",odds:null,blurb:"The 2022 hosts qualified on merit this time and have already bettered that home-tournament pain: a late Swiss own goal gave Qatar its first-ever World Cup point. Akram Afif is one of Asia's most gifted attackers, and now the group has a pulse."},
-  "Bosnia and Herzegovina":{fl:"🇧🇦",g:"B",star:"Edin Džeko · ageless at 40",hist:"2nd appearance · first since 2014",odds:null,blurb:"The Dragons won UEFA playoff A to reach their second-ever World Cup. Edin Džeko, still scoring at 40, leads an emotional return, and the opening draw in Toronto gives Bosnia a foothold in Group B."},
+  "Canada":{fl:"🇨🇦",g:"B",star:"Alphonso Davies · world-class wing-back",hist:"3rd appearance · co-host",odds:null,blurb:"Jesse Marsch's Canada followed its opening draw with Bosnia by smashing Qatar 6–0 in Vancouver, the nation's first men's World Cup win. Alphonso Davies and Jonathan David headline the most talented squad in Canadian history, and now the hosts have real knockout momentum."},
+  "Switzerland":{fl:"🇨🇭",g:"B",star:"Granit Xhaka · midfield general",hist:"13th appearance · serial Round-of-16ers",odds:null,blurb:"The Swiss have reached the knockouts at five straight major tournaments and are quietly the team nobody wants to face. After a late own goal spoiled the Qatar opener, Johan Manzambi's brace powered a 4–1 surge past Bosnia, putting Switzerland level with Canada atop Group B."},
+  "Qatar":{fl:"🇶🇦",g:"B",star:"Akram Afif · Asian Player of the Year",hist:"2nd appearance · 2022 hosts",odds:null,blurb:"The 2022 hosts qualified on merit this time and opened with a late point against Switzerland, but Canada's 6–0 rout in Vancouver wrecked the margin for error. Akram Afif is one of Asia's most gifted attackers; Bosnia is now a survival match."},
+  "Bosnia and Herzegovina":{fl:"🇧🇦",g:"B",star:"Edin Džeko · ageless at 40",hist:"2nd appearance · first since 2014",odds:null,blurb:"The Dragons won UEFA playoff A to reach their second-ever World Cup. Edin Džeko, still scoring at 40, leads an emotional return, but Switzerland's late 4–1 surge erased the opening Toronto point and makes Qatar a must-win."},
   // Group C
   "Brazil":{fl:"🇧🇷",g:"C",star:"Vinícius Júnior · the headline act",hist:"23rd appearance · record 5 titles",odds:"+950",blurb:"The only nation to play in every World Cup, now coached by Carlo Ancelotti. The opener was a warning flare: Vinícius Jr rescued a 1–1 draw after Morocco landed the first punch. Brazil still has the most feared attack in the field, but the trophy drought since 2002 is loud."},
   "Morocco":{fl:"🇲🇦",g:"C",star:"Achraf Hakimi · PSG superstar",hist:"7th appearance · historic SF in 2022",odds:null,blurb:"The Atlas Lions became the first African semifinalists in history in 2022, and this squad is arguably stronger. Ismael Saibari's opener against Brazil showed exactly why this side fears no one, even after Vinícius Jr pulled the favorite level."},
@@ -819,10 +819,10 @@ const MATCHES = [
   {d:"Jun 17",g:"L",h:"Ghana",a:"Panama",s:[1,0],v:"BMO Field, Toronto",note:"Ghana edged Panama in Toronto"},
   {d:"Jun 17",g:"K",h:"Uzbekistan",a:"Colombia",s:[1,3],v:"Estadio Azteca, Mexico City",note:"Colombia spoiled Uzbekistan's debut"},
   // Matchday 2
-  {d:"Jun 18",g:"A",h:"Czechia",a:"South Africa",v:"Atlanta"},
-  {d:"Jun 18",g:"B",h:"Switzerland",a:"Bosnia and Herzegovina",v:"Inglewood"},
-  {d:"Jun 18",g:"B",h:"Canada",a:"Qatar",v:"Vancouver"},
-  {d:"Jun 18",g:"A",h:"Mexico",a:"South Korea",v:"Guadalajara"},
+  {d:"Jun 18",g:"A",h:"Czechia",a:"South Africa",s:[1,1],v:"Atlanta",note:"Mokoena's 83' penalty rescued South Africa"},
+  {d:"Jun 18",g:"B",h:"Switzerland",a:"Bosnia and Herzegovina",s:[4,1],v:"Inglewood",note:"Manzambi sparked Switzerland's late surge"},
+  {d:"Jun 18",g:"B",h:"Canada",a:"Qatar",s:[6,0],v:"Vancouver",note:"David hat trick gave Canada its first WC win"},
+  {d:"Jun 18",g:"A",h:"Mexico",a:"South Korea",s:[1,0],v:"Guadalajara",note:"Romo winner sent Mexico to the R32"},
   {d:"Jun 19",g:"D",h:"United States",a:"Australia",v:"Seattle"},
   {d:"Jun 19",g:"C",h:"Scotland",a:"Morocco",v:"Foxborough"},
   {d:"Jun 19",g:"C",h:"Brazil",a:"Haiti",v:"Philadelphia"},
@@ -1211,7 +1211,7 @@ const ODDS = [
 /* ================= HELPERS ================= */
 const esc = s => String(s ?? '').replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const fl = t => TEAMS[t] ? TEAMS[t].fl : "🏳️";
-const TODAY_DATE = "Jun 18";
+const TODAY_DATE = "Jun 19";
 const FIFA_COMPETITION_ID = "17";
 const FIFA_SEASON_ID = "285023";
 const DATA_ENDPOINTS = {
@@ -1509,7 +1509,7 @@ function updateMatchdayChip(showing){
   const chip = document.querySelector('.matchday-chip');
   const liveNow = showing.some(m=>m.live && m.live.status==='live');
   const finalNow = showing.length && showing.every(m=>m.live && m.live.status==='ft');
-  const text = liveNow ? 'LIVE · Matchday 7' : finalNow ? 'Full time · Matchday 7' : 'Matchday 7 · Wed, June 17, 2026';
+  const text = liveNow ? 'LIVE · Matchday 9' : finalNow ? 'Full time · Matchday 9' : 'Matchday 9 · Fri, June 19, 2026';
   chip.innerHTML = `<span class="live-dot"></span>${esc(text)}`;
 }
 function renderLiveMode(){
