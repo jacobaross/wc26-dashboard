@@ -107,11 +107,12 @@ if (snapshot) {
     assert(Boolean(teams[o.t]), `Odds row ${idx + 1} references unknown team ${o.t}.`);
     if (idx > 0) assert(o.ip <= odds[idx - 1].ip, `Odds row ${idx + 1} is out of descending probability order.`);
   }
+  // Group A final standings after Matchday 3 (Jun 24): Mexico 9, South Africa 4, South Korea 3, Czechia 1.
   const expectedA = [
-    ['Mexico', 6, 3],
-    ['South Korea', 3, 0],
-    ['Czechia', 1, -1],
-    ['South Africa', 1, -2]
+    ['Mexico', 9, 6],
+    ['South Africa', 4, -1],
+    ['South Korea', 3, -1],
+    ['Czechia', 1, -4]
   ];
   for (let i = 0; i < expectedA.length; i++) {
     const [team, pts, gd] = expectedA[i];
