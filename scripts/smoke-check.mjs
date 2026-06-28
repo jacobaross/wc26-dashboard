@@ -39,6 +39,12 @@ assert(/data-tab="players"/.test(html), 'Missing Players tab button.');
 assert(/id="panel-players"/.test(html), 'Missing Players tab panel.');
 assert(/id="player-search"/.test(html), 'Missing player search control.');
 assert(/id="players-container"/.test(html), 'Missing players render container.');
+assert(/data-tab="bracket"/.test(html), 'Missing Bracket tab button.');
+assert(/id="panel-bracket"/.test(html), 'Missing Bracket tab panel.');
+assert(/id="bracket-r32"/.test(html), 'Missing Round of 32 bracket render container.');
+assert(/class="bracket-grid"/.test(html), 'Missing bracket grid markup.');
+assert(/const\s+BRACKET\s*=/.test(html), 'Missing BRACKET data structure.');
+assert(/function\s+renderBracket\b/.test(html), 'Missing renderBracket function.');
 assert(/class="stream-badge/.test(html), 'Missing watch/stream badge markup or renderer.');
 assert(/setInterval\(refreshLiveMode,\s*60000\)/.test(html), 'Live Mode should poll every 60 seconds.');
 assert(/function shouldKeepPolling/.test(html), 'Missing explicit Live Mode polling stop guard.');
@@ -65,7 +71,7 @@ assert(markerIdx > -1, 'Could not find helpers marker after data block.');
 let snapshot = null;
 if (markerIdx > -1) {
   const dataPart = script.slice(0, markerIdx);
-  const checker = `\n(function(){\n  function standings(group){\n    const table = {};\n    GROUP_TEAMS[group].forEach(t => table[t] = {team:t,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0});\n    MATCHES.filter(m => m.g===group && m.s).forEach(m=>{\n      const H=table[m.h], A=table[m.a];\n      H.p++;A.p++;H.gf+=m.s[0];H.ga+=m.s[1];A.gf+=m.s[1];A.ga+=m.s[0];\n      if(m.s[0]>m.s[1]){H.w++;A.l++;H.pts+=3}\n      else if(m.s[0]<m.s[1]){A.w++;H.l++;A.pts+=3}\n      else{H.d++;A.d++;H.pts++;A.pts++}\n    });\n    return Object.values(table).sort((a,b)=>\n      b.pts-a.pts || (b.gf-b.ga)-(a.gf-a.ga) || b.gf-a.gf || a.team.localeCompare(b.team));\n  }\n  globalThis.__snapshot = {\n    teams: TEAMS, groups: GROUPS, groupTeams: GROUP_TEAMS, matches: MATCHES, odds: ODDS,\n    players: typeof PLAYERS !== 'undefined' ? PLAYERS : null,\n    playerStats: typeof PLAYER_STATS !== 'undefined' ? PLAYER_STATS : null,\n    playerSpotlights: typeof PLAYER_SPOTLIGHTS !== 'undefined' ? PLAYER_SPOTLIGHTS : null,\n    groupA: standings('A'),\n    todayPinned: todayPinnedFromScript,\n    chip: (htmlText.match(/Matchday [^<]+/)||[])[0] || null\n  };\n})();`;
+  const checker = `\n(function(){\n  function standings(group){\n    const table = {};\n    GROUP_TEAMS[group].forEach(t => table[t] = {team:t,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0});\n    MATCHES.filter(m => m.g===group && m.s).forEach(m=>{\n      const H=table[m.h], A=table[m.a];\n      H.p++;A.p++;H.gf+=m.s[0];H.ga+=m.s[1];A.gf+=m.s[1];A.ga+=m.s[0];\n      if(m.s[0]>m.s[1]){H.w++;A.l++;H.pts+=3}\n      else if(m.s[0]<m.s[1]){A.w++;H.l++;A.pts+=3}\n      else{H.d++;A.d++;H.pts++;A.pts++}\n    });\n    return Object.values(table).sort((a,b)=>\n      b.pts-a.pts || (b.gf-b.ga)-(a.gf-a.ga) || b.gf-a.gf || a.team.localeCompare(b.team));\n  }\n  globalThis.__snapshot = {\n    teams: TEAMS, groups: GROUPS, groupTeams: GROUP_TEAMS, matches: MATCHES, odds: ODDS,\n    bracket: typeof BRACKET !== 'undefined' ? BRACKET : null,\n    players: typeof PLAYERS !== 'undefined' ? PLAYERS : null,\n    playerStats: typeof PLAYER_STATS !== 'undefined' ? PLAYER_STATS : null,\n    playerSpotlights: typeof PLAYER_SPOTLIGHTS !== 'undefined' ? PLAYER_SPOTLIGHTS : null,\n    groupA: standings('A'),\n    todayPinned: todayPinnedFromScript,\n    chip: (htmlText.match(/<span class=\"matchday-chip\"><span class=\"live-dot\"><\\/span>([^<]+)<\\/span>/)||[])[1]?.trim() || null\n  };\n})();`;
   try {
     const context = { globalThis: {}, scriptText: script, htmlText: html, todayPinnedFromScript };
     context.globalThis = context;
@@ -77,7 +83,7 @@ if (markerIdx > -1) {
 }
 
 if (snapshot) {
-  const { teams, groups, groupTeams, matches, odds, players, playerStats, playerSpotlights, groupA } = snapshot;
+  const { teams, groups, groupTeams, matches, odds, bracket, players, playerStats, playerSpotlights, groupA } = snapshot;
   const teamNames = Object.keys(teams);
   assert(teamNames.length === 48, `Expected 48 teams, found ${teamNames.length}.`);
   assert(Array.isArray(groups) && groups.length === 12, `Expected 12 groups, found ${groups?.length}.`);
@@ -106,6 +112,20 @@ if (snapshot) {
   for (const [idx, o] of odds.entries()) {
     assert(Boolean(teams[o.t]), `Odds row ${idx + 1} references unknown team ${o.t}.`);
     if (idx > 0) assert(o.ip <= odds[idx - 1].ip, `Odds row ${idx + 1} is out of descending probability order.`);
+  }
+  assert(bracket && typeof bracket === 'object', 'BRACKET should be an object.');
+  if (bracket) {
+    assert(Array.isArray(bracket.r32) && bracket.r32.length === 16, `BRACKET.r32 should contain 16 Round of 32 matches, found ${bracket.r32?.length}.`);
+    assert((bracket.thirdPlaceGroups || []).join('') === 'BDEFIJKL', `Expected third-place qualifier groups B,D,E,F,I,J,K,L; got ${(bracket.thirdPlaceGroups || []).join(',')}.`);
+    if (Array.isArray(bracket.r32)) {
+      const matchNums = bracket.r32.map(m => m.n).sort((a,b)=>a-b).join(',');
+      assert(matchNums === '73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88', `Round of 32 match numbers are wrong: ${matchNums}`);
+      const byNum = Object.fromEntries(bracket.r32.map(m => [m.n, m]));
+      assert(byNum[73]?.homeSeed === '2A' && byNum[73]?.awaySeed === '2B', 'Match 73 should be 2A vs 2B.');
+      assert(byNum[81]?.homeSeed === '1D' && byNum[81]?.awaySeed === '3B', 'Match 81 should be 1D vs 3B for the B,D,E,F,I,J,K,L combination.');
+      assert(byNum[87]?.homeSeed === '1K' && byNum[87]?.awaySeed === '3L', 'Match 87 should be 1K vs 3L for the B,D,E,F,I,J,K,L combination.');
+      assert(byNum[88]?.homeSeed === '2D' && byNum[88]?.awaySeed === '2G', 'Match 88 should be 2D vs 2G.');
+    }
   }
   // Group A final standings after Matchday 3 (Jun 24): Mexico 9, South Africa 4, South Korea 3, Czechia 1.
   const expectedA = [
