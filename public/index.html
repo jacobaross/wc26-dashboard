@@ -456,10 +456,12 @@ table.standings tr.clickable:hover{background:rgba(232,181,65,.07)}
 .bracket-teams{display:grid;gap:7px}
 .bracket-team{
   width:100%;border:1px solid rgba(247,244,236,.08);border-radius:11px;background:rgba(7,43,32,.54);
-  color:var(--chalk);display:grid;grid-template-columns:42px 30px minmax(0,1fr);gap:8px;align-items:center;
+  color:var(--chalk);display:grid;grid-template-columns:42px 30px minmax(0,1fr) auto;gap:8px;align-items:center;
   padding:9px 10px;text-align:left;transition:border-color .15s,background .15s;
 }
 .bracket-team:hover{border-color:rgba(232,181,65,.42);background:rgba(232,181,65,.07)}
+.bracket-team.winner{border-color:rgba(232,181,65,.52);background:rgba(232,181,65,.08)}
+.bracket-team.eliminated{opacity:.72}
 .bracket-team.placeholder{cursor:default;color:var(--chalk-dim)}
 .bracket-team.placeholder:hover{border-color:rgba(247,244,236,.08);background:rgba(7,43,32,.54)}
 .bracket-team .seed{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pitch-deep);background:var(--gold);border-radius:5px;padding:3px 6px;text-align:center;font-weight:800}
@@ -467,6 +469,7 @@ table.standings tr.clickable:hover{background:rgba(232,181,65,.07)}
 .bracket-team .fl{font-size:1.25rem;line-height:1;text-align:center}
 .bracket-team .name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bracket-team .slot{grid-column:3;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--chalk-dim);margin-top:-4px}
+.bracket-team .bscore{grid-column:4;grid-row:1 / span 2;font-family:'Anton';font-size:1.35rem;color:var(--gold);align-self:center}
 .bracket-venue{margin-top:11px;padding-top:10px;border-top:1px solid rgba(247,244,236,.08);font-size:.75rem;color:var(--chalk-dim)}
 .third-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
 .third-card{background:var(--pitch-card);border:1px solid var(--line);border-radius:12px;padding:12px;border-left:3px solid var(--gold)}
@@ -567,7 +570,7 @@ footer{
       <span class="mark">FIELD OF <em>48</em></span>
       <span class="sub">World Cup 2026 · USA · Canada · Mexico</span>
     </a>
-    <span class="matchday-chip"><span class="live-dot"></span>Knockouts begin · Sun, June 28, 2026</span>
+    <span class="matchday-chip"><span class="live-dot"></span>Round of 32 · Mon, June 29, 2026</span>
   </div>
   <nav class="tabs" role="tablist" aria-label="Dashboard sections">
     <button class="tab active" data-tab="today" role="tab" aria-selected="true">Today</button>
@@ -587,9 +590,9 @@ footer{
   <section class="panel active" id="panel-today" role="tabpanel">
     <div id="live-mode-root" aria-live="polite"></div>
     <div class="hero">
-      <span class="kicker">Knockouts begin · Day 18 of 39</span>
+      <span class="kicker">Round of 32 · Day 19 of 39</span>
       <h1>The biggest <span class="accent">World Cup</span> ever is underway.</h1>
-      <p class="lede">The group stage is closed: Argentina and Mexico swept nine points, Belgium's 5–1 rout won Group G on goal difference, and Colombia topped Portugal's group after a scoreless showdown. The new 32-team knockout round starts today; chaos now gets single-elimination teeth.</p>
+      <p class="lede">Canada is the first knockout winner after Stephen Eustáquio's 90+2' strike beat South Africa 1–0. The Round of 32 rolls on today with Brazil–Japan, Germany–Paraguay and Netherlands–Morocco.</p>
       <div class="hero-stats">
         <div class="hstat"><div class="n">48</div><div class="l">Teams</div></div>
         <div class="hstat"><div class="n">104</div><div class="l">Matches</div></div>
@@ -598,7 +601,7 @@ footer{
       </div>
     </div>
 
-    <div class="sect"><h2>Latest Matchday</h2><div class="rule"></div><span class="tag">Group finale · Jun 27</span></div>
+    <div class="sect"><h2>Latest Group Matchday</h2><div class="rule"></div><span class="tag">Group finale · Jun 27</span></div>
     <div class="match-grid" id="today-matches"></div>
 
     <div class="sect"><h2>Results So Far</h2><div class="rule"></div><span class="tag">Final group-stage</span></div>
@@ -607,7 +610,7 @@ footer{
     <div class="sect"><h2>Storylines To Watch</h2><div class="rule"></div></div>
     <div class="story-grid">
       <div class="story has-photo"><figure class="story-photo"><img src="img/storylines/last-dances.webp" alt="Two veteran football captains walking toward a floodlit pitch" loading="lazy" decoding="async"></figure><h3>🐐 The last dances</h3><p>Messi's Argentina swept Group J; Ronaldo's Portugal finished second behind Colombia. Both sixth-World-Cup icons survived the first cut, but only one got the clean road.</p></div>
-      <div class="story alt has-photo"><figure class="story-photo"><img src="img/storylines/hosts.webp" alt="A packed North American soccer stadium at night" loading="lazy" decoding="async"></figure><h3>🏠 Three hosts, three dreams</h3><p>Mexico won Group A, the USA won Group D despite Türkiye's late punch, and Canada advanced from Group B after its first men's World Cup win. The host-nation noise is still very alive.</p></div>
+      <div class="story alt has-photo"><figure class="story-photo"><img src="img/storylines/hosts.webp" alt="A packed North American soccer stadium at night" loading="lazy" decoding="async"></figure><h3>🏠 Three hosts, three dreams</h3><p>Mexico won Group A, the USA won Group D despite Türkiye's late punch, and Canada now owns the hosts' first knockout win after beating South Africa 1–0. The home-nation noise is still very alive.</p></div>
       <div class="story has-photo"><figure class="story-photo"><img src="img/storylines/spain.webp" alt="A young winger dribbling under stadium lights" loading="lazy" decoding="async"></figure><h3>⚡ Spain's golden floor</h3><p>The Euro 2024 champions still topped Group H after a weirdly stubborn start: 0–0 with Cape Verde, then 4–0 and 1–0 wins. Lamine Yamal and Pedri remain the tournament's cleanest possession machine.</p></div>
       <div class="story alt has-photo"><figure class="story-photo"><img src="img/storylines/red-card.webp" alt="A referee holding a red card during a night match" loading="lazy" decoding="async"></figure><h3>🟥 A record-breaking opener</h3><p>Mexico's 2–0 win over South Africa featured three red cards — the most ever in a single World Cup match. The expanded tournament wasted no time making history.</p></div>
       <div class="story has-photo"><figure class="story-photo"><img src="img/storylines/norway.webp" alt="A powerful striker celebrating under cold stadium lights" loading="lazy" decoding="async"></figure><h3>🇳🇴 Haaland, finally</h3><p>Norway's first World Cup since 1998 is still rolling: Haaland and Ødegaard powered a runner-up finish behind France. Nobody wants that striker tax in a knockout game.</p></div>
@@ -624,11 +627,11 @@ footer{
 
   <!-- ================= BRACKET ================= -->
   <section class="panel" id="panel-bracket" role="tabpanel">
-    <div class="sect"><h2>Knockout Bracket</h2><div class="rule"></div><span class="tag">Round of 32 locked</span></div>
+    <div class="sect"><h2>Knockout Bracket</h2><div class="rule"></div><span class="tag">Round of 32 live</span></div>
     <div class="bracket-primer">
       <div>
         <h3>The chaos bracket is real now</h3>
-        <p>The group stage cut 48 teams to 32. This tab resolves the Round of 32 from the final group tables and the official best-third combination: B, D, E, F, I, J, K and L.</p>
+        <p>The group stage cut 48 teams to 32. Canada opened the Round of 32 by beating South Africa 1–0; the official best-third combination is B, D, E, F, I, J, K and L.</p>
       </div>
       <div class="primer-list">
         <div class="primer-pill"><strong>Tap</strong> any team to open its profile and group fixtures.</div>
@@ -778,7 +781,7 @@ footer{
 </div>
 
 <footer>
-  Field of 48 · Standings and results current as of Sunday, June 28, 2026 · Odds as of June 11–12 · Built for fun, refreshed by you
+  Field of 48 · Standings and bracket current as of Monday, June 29, 2026 · Odds as of June 11–12 · Built for fun, refreshed by you
 </footer>
 
 <script>
@@ -786,11 +789,11 @@ footer{
 const TEAMS = {
   // Group A
   "Mexico":{fl:"🇲🇽",g:"A",star:"Gilberto Mora · 17-year-old phenom",hist:"18th appearance · QF twice",odds:null,blurb:"The hosts are already into the Round of 32: a 2–0 opener at the Azteca and Luis Romo's 1–0 winner over South Korea and a 3–0 rout of Czechia made El Tri the first team ever to win all three group games — nine from nine and Group A's top seed. Veteran keeper Guillermo Ochoa is at his fifth World Cup, while teenager Gilberto Mora carries the new generation's hopes. El Tri has never passed the quarterfinals; doing it at home would be immortality."},
-  "South Africa":{fl:"🇿🇦",g:"A",star:"Relebohile Mofokeng · winger",hist:"4th appearance · first since hosting 2010",odds:null,blurb:"Bafana Bafana are back at the World Cup for the first time since hosting in 2010. After opening with a 2–0 loss to Mexico, Teboho Mokoena's late penalty against Czechia gave them a first point , and a 1–0 win over South Korea sent Bafana through as Group A runners-up."},
+  "South Africa":{fl:"🇿🇦",g:"A",star:"Relebohile Mofokeng · winger",hist:"4th appearance · first since hosting 2010",odds:null,blurb:"Bafana Bafana are back at the World Cup for the first time since hosting in 2010. After opening with a 2–0 loss to Mexico, Teboho Mokoena's late penalty against Czechia gave them a first point, and a 1–0 win over South Korea sent Bafana through as Group A runners-up. Stephen Eustáquio's 90+2' winner for Canada ended the run in the Round of 32."},
   "South Korea":{fl:"🇰🇷",g:"A",star:"Son Heung-min · captain & talisman",hist:"11th straight appearance · SF in 2002",odds:null,blurb:"The Taeguk Warriors fell behind against Czechia and roared back to win 2–1, then got edged 1–0 by Mexico in Guadalajara. Son Heung-min — likely at his final World Cup — still gave Korea a puncher's chance, but a 1–0 loss to South Africa left Korea third in Group A and below the best-third-place cut."},
   "Czechia":{fl:"🇨🇿",g:"A",star:"Patrik Schick · striker",hist:"First World Cup as Czechia since 2006",odds:null,blurb:"Winners of UEFA playoff D, the Czechs are at their first World Cup in two decades. A late collapse against South Korea stung, and South Africa's 83rd-minute penalty denied them a first win. Patrik Schick's threat never quite sparked, and a 3–0 loss to Mexico ended the campaign."},
   // Group B
-  "Canada":{fl:"🇨🇦",g:"B",star:"Alphonso Davies · world-class wing-back",hist:"3rd appearance · co-host",odds:null,blurb:"Jesse Marsch's Canada followed its opening draw with Bosnia by smashing Qatar 6–0 in Vancouver, the nation's first men's World Cup win. Alphonso Davies and Jonathan David headline the most talented squad in Canadian history, and a 2–1 loss to Switzerland still sent Canada through as Group B runners-up."},
+  "Canada":{fl:"🇨🇦",g:"B",star:"Alphonso Davies · world-class wing-back",hist:"3rd appearance · co-host",odds:null,blurb:"Jesse Marsch's Canada followed its opening draw with Bosnia by smashing Qatar 6–0 in Vancouver, the nation's first men's World Cup win. Alphonso Davies and Jonathan David headline the most talented squad in Canadian history, and a 2–1 loss to Switzerland still sent Canada through as Group B runners-up. Canada then beat South Africa 1–0 in the Round of 32 on Eustáquio's 90+2' strike."},
   "Switzerland":{fl:"🇨🇭",g:"B",star:"Granit Xhaka · midfield general",hist:"13th appearance · serial Round-of-16ers",odds:null,blurb:"The Swiss have reached the knockouts at five straight major tournaments and are quietly the team nobody wants to face. After a late own goal spoiled the Qatar opener, Johan Manzambi's brace powered a 4–1 surge past Bosnia, and a 2–1 win over Canada lifted Switzerland to the Group B summit."},
   "Qatar":{fl:"🇶🇦",g:"B",star:"Akram Afif · Asian Player of the Year",hist:"2nd appearance · 2022 hosts",odds:null,blurb:"The 2022 hosts qualified on merit this time and opened with a late point against Switzerland, but Canada's 6–0 rout in Vancouver wrecked the margin for error. Akram Afif is one of Asia's most gifted attackers, and a 3–1 loss to Bosnia ended the campaign on a single point."},
   "Bosnia and Herzegovina":{fl:"🇧🇦",g:"B",star:"Edin Džeko · ageless at 40",hist:"2nd appearance · first since 2014",odds:null,blurb:"The Dragons won UEFA playoff A to reach their second-ever World Cup. Edin Džeko, still scoring at 40, leads an emotional return, and a 3–1 win over Qatar left Bosnia third on four points — enough for a best-third-place ticket."},
@@ -944,7 +947,7 @@ const BRACKET = {
   source:"FIFA calendar + third-place combination B,D,E,F,I,J,K,L",
   thirdPlaceGroups:["B","D","E","F","I","J","K","L"],
   r32:[
-    {n:73,d:"Jun 28",t:"3:00 PM ET",v:"Los Angeles Stadium",city:"Los Angeles",homeSeed:"2A",awaySeed:"2B"},
+    {n:73,d:"Jun 28",t:"3:00 PM ET",v:"Los Angeles Stadium",city:"Los Angeles",homeSeed:"2A",awaySeed:"2B",s:[0,1],note:"Eustáquio 90+2' sent Canada through"},
     {n:76,d:"Jun 29",t:"1:00 PM ET",v:"Houston Stadium",city:"Houston",homeSeed:"1C",awaySeed:"2F"},
     {n:74,d:"Jun 29",t:"4:30 PM ET",v:"Boston Stadium",city:"Boston",homeSeed:"1E",awaySeed:"3D"},
     {n:75,d:"Jun 29",t:"9:00 PM ET",v:"Monterrey Stadium",city:"Monterrey",homeSeed:"1F",awaySeed:"2C"},
@@ -1330,8 +1333,9 @@ const ODDS = [
 /* ================= HELPERS ================= */
 const esc = s => String(s ?? '').replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const fl = t => TEAMS[t] ? TEAMS[t].fl : "🏳️";
-const TODAY_DATE = "Jun 27";
-const MATCHDAY_CHIP_TEXT = "Knockouts begin · Sun, June 28, 2026";
+const TODAY_DATE = "Jun 29";
+const LATEST_MATCH_DATE = "Jun 27";
+const MATCHDAY_CHIP_TEXT = "Round of 32 · Mon, June 29, 2026";
 const MATCHDAY_LIVE_TEXT = "LIVE · Group-stage finale";
 const MATCHDAY_FINAL_TEXT = "Full time · Group-stage finale";
 const FIFA_COMPETITION_ID = "17";
@@ -1384,7 +1388,7 @@ function matchCard(m,{showWatch=false}={}){
 }
 
 document.getElementById('today-matches').innerHTML =
-  MATCHES.filter(m=>m.d===TODAY_DATE).map(m=>matchCard(m,{showWatch:true})).join('');
+  MATCHES.filter(m=>m.d===LATEST_MATCH_DATE).map(m=>matchCard(m,{showWatch:true})).join('');
 document.getElementById('played-matches').innerHTML =
   MATCHES.filter(m=>m.s).map(matchCard).join('');
 
@@ -1683,11 +1687,29 @@ function renderGroups(){
 renderGroups();
 
 /* ================= RENDER: bracket ================= */
+function bracketMatchByNumber(n){
+  const num = Number(n);
+  return [...BRACKET.r32,...BRACKET.laterRounds.flatMap(r=>r.matches)].find(m=>m.n===num);
+}
 function seedTeam(seed){
-  const m = String(seed||'').match(/^([123])([A-L])$/);
-  if(!m) return '';
-  const row = computeStandings(m[2])[Number(m[1])-1];
-  return row ? row.team : '';
+  const value = String(seed||'');
+  const m = value.match(/^([123])([A-L])$/);
+  if(m){
+    const row = computeStandings(m[2])[Number(m[1])-1];
+    return row ? row.team : '';
+  }
+  const result = value.match(/^(W|RU)(\d+)$/);
+  if(result){
+    const match = bracketMatchByNumber(result[2]);
+    if(!match || !Array.isArray(match.s)) return '';
+    const home = seedTeam(match.homeSeed);
+    const away = seedTeam(match.awaySeed);
+    if(!home || !away || match.s[0]===match.s[1]) return '';
+    const winner = match.s[0] > match.s[1] ? home : away;
+    const loser = match.s[0] > match.s[1] ? away : home;
+    return result[1]==='W' ? winner : loser;
+  }
+  return '';
 }
 function seedShort(seed){
   const value = String(seed||'');
@@ -1706,23 +1728,28 @@ function seedLabel(seed){
   }
   const win = value.match(/^W(\d+)$/);
   const lose = value.match(/^RU(\d+)$/);
-  if(win) return `Winner Match ${win[1]}`;
-  if(lose) return `Loser Match ${lose[1]}`;
+  if(win) return seedTeam(value) || `Winner Match ${win[1]}`;
+  if(lose) return seedTeam(value) || `Loser Match ${lose[1]}`;
   return value;
 }
-function bracketTeamRow(seed){
+function bracketTeamRow(seed, score=null, outcome=''){
   const team = seedTeam(seed);
   const isTeam = Boolean(team && TEAMS[team]);
-  const content = `<span class="seed">${esc(seedShort(seed))}</span><span class="fl">${isTeam?fl(team):'↳'}</span><span class="name">${esc(isTeam?team:seedLabel(seed))}</span><span class="slot">${esc(seedLabel(seed))}</span>`;
+  const scoreHtml = Number.isInteger(score) ? `<span class="bscore">${esc(score)}</span>` : '';
+  const cls = ['bracket-team', outcome].filter(Boolean).join(' ');
+  const content = `<span class="seed">${esc(seedShort(seed))}</span><span class="fl">${isTeam?fl(team):'↳'}</span><span class="name">${esc(isTeam?team:seedLabel(seed))}</span><span class="slot">${esc(seedLabel(seed))}</span>${scoreHtml}`;
   return isTeam
-    ? `<button class="bracket-team" data-team="${esc(team)}" aria-label="Open ${esc(team)} profile">${content}</button>`
+    ? `<button class="${esc(cls)}" data-team="${esc(team)}" aria-label="Open ${esc(team)} profile">${content}</button>`
     : `<div class="bracket-team placeholder">${content}</div>`;
 }
 function bracketMatchCard(m){
+  const hasScore = Array.isArray(m.s) && m.s.length===2;
+  const homeState = hasScore && m.s[0]!==m.s[1] ? (m.s[0]>m.s[1]?'winner':'eliminated') : '';
+  const awayState = hasScore && m.s[0]!==m.s[1] ? (m.s[1]>m.s[0]?'winner':'eliminated') : '';
   return `<article class="bracket-match">
     <div class="bracket-meta"><span class="mno">M${esc(m.n)}</span><span>${esc(m.d)} · ${esc(m.t)}</span></div>
-    <div class="bracket-teams">${bracketTeamRow(m.homeSeed)}${bracketTeamRow(m.awaySeed)}</div>
-    <div class="bracket-venue">${esc(m.v)}${m.city?` · ${esc(m.city)}`:''}</div>
+    <div class="bracket-teams">${bracketTeamRow(m.homeSeed, hasScore?m.s[0]:null, homeState)}${bracketTeamRow(m.awaySeed, hasScore?m.s[1]:null, awayState)}</div>
+    <div class="bracket-venue">${esc(m.v)}${m.city?` · ${esc(m.city)}`:''}${m.note?`<br><span style="color:var(--gold);font-style:italic">${esc(m.note)}</span>`:''}</div>
   </article>`;
 }
 function thirdPlaceRows(){
